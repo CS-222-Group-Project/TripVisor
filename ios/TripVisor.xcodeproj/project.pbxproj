@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* ReactNativeStarterKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativeStarterKitTests.m */; };
+		00E356F31AD99517003FC87E /* TripVisorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TripVisorTests.m */; };
 		052901E124FE4A2C91A7747D /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B073B74C412C49F4972548E6 /* Roboto.ttf */; };
 		08E5C941723D474B8FD16B6E /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44A3B9E6B6B34FE0AED7485C /* FontAwesome5_Solid.ttf */; };
 		10CB6940E4314250A9BB64F4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9C2ED63BD574EFEA1703194 /* MaterialIcons.ttf */; };
@@ -20,7 +20,7 @@
 		43B962063667422DB3069C71 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EED8F2618B4C4FADE4A889 /* Octicons.ttf */; };
 		4BF4701DE0654843A474F3D1 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67CFA9BBA3BC42EEBFF64D40 /* FontAwesome5_Regular.ttf */; };
 		6789B4CBF09F4B3598A78BB3 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49CD9F14390D49A39C46E7EC /* SimpleLineIcons.ttf */; };
-		7B0518509ED86C83EA39A3E1 /* libPods-ReactNativeStarterKit-ReactNativeStarterKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66C24B16017EA8D3A6439319 /* libPods-ReactNativeStarterKit-ReactNativeStarterKitTests.a */; };
+		7B0518509ED86C83EA39A3E1 /* libPods-TripVisor-TripVisorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66C24B16017EA8D3A6439319 /* libPods-TripVisor-TripVisorTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8340937E2C294A4A914FBB81 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990277643E8B4D49906DD90F /* Fontisto.ttf */; };
 		8AEEAFCF1AB14B578A538277 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28813325ED804D90B580AAC5 /* Ionicons.ttf */; };
@@ -28,7 +28,7 @@
 		9684FCDAE0C24549B64FB7C6 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1D55AD7C28464DB1986B57 /* EvilIcons.ttf */; };
 		ADA01535339447B5BD2A62CE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EB7C253771543B6882FD8F3 /* Zocial.ttf */; };
 		BC31381BB2D6462CACBBF214 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0AB967BBCB42FC9BD54E42 /* Feather.ttf */; };
-		BEC946271F09A5B64CF03972 /* libPods-ReactNativeStarterKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDF2A57938015291AF1816B1 /* libPods-ReactNativeStarterKit.a */; };
+		BEC946271F09A5B64CF03972 /* libPods-TripVisor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDF2A57938015291AF1816B1 /* libPods-TripVisor.a */; };
 		BF04E52E253F4D6994EF5C8C /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5C7B7582044477AAED0C55D /* Foundation.ttf */; };
 		C14F692F7BE74BBC9FD6CE0B /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA4E1ADBFBED4F85ACC53150 /* AntDesign.ttf */; };
 		CF121A4558DD44E691F7DB8C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C47A21449604825A411CB3A /* FontAwesome.ttf */; };
@@ -41,20 +41,20 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = ReactNativeStarterKit;
+			remoteInfo = "TripVisor";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* ReactNativeStarterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeStarterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* TripVisorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TripVisorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* ReactNativeStarterKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeStarterKitTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* ReactNativeStarterKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactNativeStarterKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ReactNativeStarterKit/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ReactNativeStarterKit/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ReactNativeStarterKit/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ReactNativeStarterKit/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNativeStarterKit/main.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* TripVisorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TripVisorTests.m"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* TripVisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TripVisor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "TripVisor/AppDelegate.h"; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TripVisor/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "TripVisor/Images.xcassets"; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "TripVisor/Info.plist"; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "TripVisor/main.m"; sourceTree = "<group>"; };
 		1EB7C253771543B6882FD8F3 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		28813325ED804D90B580AAC5 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		2CC437898DE2480B9C45D475 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
@@ -63,19 +63,19 @@
 		49CD9F14390D49A39C46E7EC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		4C47A21449604825A411CB3A /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		4E174C592D2347DCA8BB9C14 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		66C24B16017EA8D3A6439319 /* libPods-ReactNativeStarterKit-ReactNativeStarterKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeStarterKit-ReactNativeStarterKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66C24B16017EA8D3A6439319 /* libPods-TripVisor-TripVisorTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TripVisor-TripVisorTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67CFA9BBA3BC42EEBFF64D40 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		7481C9367F010EDF3DD2A92D /* Pods-ReactNativeStarterKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeStarterKit.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit.debug.xcconfig"; sourceTree = "<group>"; };
+		7481C9367F010EDF3DD2A92D /* Pods-TripVisor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripVisor.debug.xcconfig"; path = "Target Support Files/Pods-TripVisor/Pods-TripVisor.debug.xcconfig"; sourceTree = "<group>"; };
 		7ADB5ACAC0134B5B94D59909 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		8139D2545173B10CB2FA2B2B /* Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeStarterKit/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8F999B6753B3A78E2C4D0E70 /* Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		8139D2545173B10CB2FA2B2B /* Pods-TripVisor-TripVisorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripVisor-TripVisorTests.debug.xcconfig"; path = "Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests.debug.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "TripVisor/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		8F999B6753B3A78E2C4D0E70 /* Pods-TripVisor-TripVisorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripVisor-TripVisorTests.release.xcconfig"; path = "Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests.release.xcconfig"; sourceTree = "<group>"; };
 		990277643E8B4D49906DD90F /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		9B158D20B45341A0911F7D6F /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
-		9D34BB1EF145A457E62FEA76 /* Pods-ReactNativeStarterKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeStarterKit.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit.release.xcconfig"; sourceTree = "<group>"; };
+		9D34BB1EF145A457E62FEA76 /* Pods-TripVisor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripVisor.release.xcconfig"; path = "Target Support Files/Pods-TripVisor/Pods-TripVisor.release.xcconfig"; sourceTree = "<group>"; };
 		B073B74C412C49F4972548E6 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		B5C7B7582044477AAED0C55D /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		BDF2A57938015291AF1816B1 /* libPods-ReactNativeStarterKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeStarterKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDF2A57938015291AF1816B1 /* libPods-TripVisor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TripVisor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA4E1ADBFBED4F85ACC53150 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		D9C2ED63BD574EFEA1703194 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		DFF5A129017F4007A0E40A2F /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B0518509ED86C83EA39A3E1 /* libPods-ReactNativeStarterKit-ReactNativeStarterKitTests.a in Frameworks */,
+				7B0518509ED86C83EA39A3E1 /* libPods-TripVisor-TripVisorTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,20 +97,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEC946271F09A5B64CF03972 /* libPods-ReactNativeStarterKit.a in Frameworks */,
+				BEC946271F09A5B64CF03972 /* libPods-TripVisor.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* ReactNativeStarterKitTests */ = {
+		00E356EF1AD99517003FC87E /* TripVisorTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* ReactNativeStarterKitTests.m */,
+				00E356F21AD99517003FC87E /* TripVisorTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = ReactNativeStarterKitTests;
+			path = "TripVisorTests";
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -121,7 +121,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* ReactNativeStarterKit */ = {
+		13B07FAE1A68108700A75B9A /* TripVisor */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -131,15 +131,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = ReactNativeStarterKit;
+			name = "TripVisor";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				BDF2A57938015291AF1816B1 /* libPods-ReactNativeStarterKit.a */,
-				66C24B16017EA8D3A6439319 /* libPods-ReactNativeStarterKit-ReactNativeStarterKitTests.a */,
+				BDF2A57938015291AF1816B1 /* libPods-TripVisor.a */,
+				66C24B16017EA8D3A6439319 /* libPods-TripVisor-TripVisorTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -147,10 +147,10 @@
 		455169F8CB26C387215AA95D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7481C9367F010EDF3DD2A92D /* Pods-ReactNativeStarterKit.debug.xcconfig */,
-				9D34BB1EF145A457E62FEA76 /* Pods-ReactNativeStarterKit.release.xcconfig */,
-				8139D2545173B10CB2FA2B2B /* Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.debug.xcconfig */,
-				8F999B6753B3A78E2C4D0E70 /* Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.release.xcconfig */,
+				7481C9367F010EDF3DD2A92D /* Pods-TripVisor.debug.xcconfig */,
+				9D34BB1EF145A457E62FEA76 /* Pods-TripVisor.release.xcconfig */,
+				8139D2545173B10CB2FA2B2B /* Pods-TripVisor-TripVisorTests.debug.xcconfig */,
+				8F999B6753B3A78E2C4D0E70 /* Pods-TripVisor-TripVisorTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -166,9 +166,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* ReactNativeStarterKit */,
+				13B07FAE1A68108700A75B9A /* TripVisor */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* ReactNativeStarterKitTests */,
+				00E356EF1AD99517003FC87E /* TripVisorTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				455169F8CB26C387215AA95D /* Pods */,
@@ -182,8 +182,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* ReactNativeStarterKit.app */,
-				00E356EE1AD99517003FC87E /* ReactNativeStarterKitTests.xctest */,
+				13B07F961A680F5B00A75B9A /* TripVisor.app */,
+				00E356EE1AD99517003FC87E /* TripVisorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* ReactNativeStarterKitTests */ = {
+		00E356ED1AD99517003FC87E /* TripVisorTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ReactNativeStarterKitTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TripVisorTests" */;
 			buildPhases = (
 				F3FF4959BB22F482ABABBF4B /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -234,14 +234,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = ReactNativeStarterKitTests;
-			productName = ReactNativeStarterKitTests;
-			productReference = 00E356EE1AD99517003FC87E /* ReactNativeStarterKitTests.xctest */;
+			name = "TripVisorTests";
+			productname = "TripVisorTests";
+			productReference = 00E356EE1AD99517003FC87E /* TripVisorTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* ReactNativeStarterKit */ = {
+		13B07F861A680F5B00A75B9A /* TripVisor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ReactNativeStarterKit" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TripVisor" */;
 			buildPhases = (
 				4AD694FD6B350A8D3F56588A /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -256,9 +256,9 @@
 			);
 			dependencies = (
 			);
-			name = ReactNativeStarterKit;
-			productName = ReactNativeStarterKit;
-			productReference = 13B07F961A680F5B00A75B9A /* ReactNativeStarterKit.app */;
+			name = "TripVisor";
+			productName = "TripVisor";
+			productReference = 13B07F961A680F5B00A75B9A /* TripVisor.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -278,7 +278,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ReactNativeStarterKit" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TripVisor" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -291,8 +291,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* ReactNativeStarterKit */,
-				00E356ED1AD99517003FC87E /* ReactNativeStarterKitTests */,
+				13B07F861A680F5B00A75B9A /* TripVisor */,
+				00E356ED1AD99517003FC87E /* TripVisorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -356,15 +356,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor/Pods-TripVisor-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor/Pods-TripVisor-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripVisor/Pods-TripVisor-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2509B008348E2B57810E17EC /* [CP] Embed Pods Frameworks */ = {
@@ -373,15 +373,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor/Pods-TripVisor-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor/Pods-TripVisor-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit/Pods-ReactNativeStarterKit-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripVisor/Pods-TripVisor-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4AD694FD6B350A8D3F56588A /* [CP] Check Pods Manifest.lock */ = {
@@ -399,7 +399,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ReactNativeStarterKit-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TripVisor-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -412,15 +412,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C3BDA882C6088FA54066B5B5 /* [CP] Copy Pods Resources */ = {
@@ -429,15 +429,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripVisor-TripVisorTests/Pods-TripVisor-TripVisorTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F3FF4959BB22F482ABABBF4B /* [CP] Check Pods Manifest.lock */ = {
@@ -455,7 +455,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ReactNativeStarterKit-ReactNativeStarterKitTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TripVisor-TripVisorTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -488,7 +488,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* ReactNativeStarterKitTests.m in Sources */,
+				00E356F31AD99517003FC87E /* TripVisorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,7 +506,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* ReactNativeStarterKit */;
+			target = 13B07F861A680F5B00A75B9A /* TripVisor */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -514,14 +514,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8139D2545173B10CB2FA2B2B /* Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.debug.xcconfig */;
+			baseConfigurationReference = 8139D2545173B10CB2FA2B2B /* Pods-TripVisor-TripVisorTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ReactNativeStarterKitTests/Info.plist;
+				INFOPLIST_FILE = "TripVisorTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -535,17 +535,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNativeStarterKit.app/ReactNativeStarterKit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripVisor.app/TripVisor";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F999B6753B3A78E2C4D0E70 /* Pods-ReactNativeStarterKit-ReactNativeStarterKitTests.release.xcconfig */;
+			baseConfigurationReference = 8F999B6753B3A78E2C4D0E70 /* Pods-TripVisor-TripVisorTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = ReactNativeStarterKitTests/Info.plist;
+				INFOPLIST_FILE = "TripVisorTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -559,19 +559,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNativeStarterKit.app/ReactNativeStarterKit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripVisor.app/TripVisor";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7481C9367F010EDF3DD2A92D /* Pods-ReactNativeStarterKit.debug.xcconfig */;
+			baseConfigurationReference = 7481C9367F010EDF3DD2A92D /* Pods-TripVisor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = ReactNativeStarterKit/Info.plist;
+				INFOPLIST_FILE = "TripVisor/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "TripVisor";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -582,7 +583,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = ReactNativeStarterKit;
+				PRODUCT_NAME = "TripVisor";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -591,12 +592,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D34BB1EF145A457E62FEA76 /* Pods-ReactNativeStarterKit.release.xcconfig */;
+			baseConfigurationReference = 9D34BB1EF145A457E62FEA76 /* Pods-TripVisor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = ReactNativeStarterKit/Info.plist;
+				INFOPLIST_FILE = "TripVisor/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "TripVisor";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -607,7 +609,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = ReactNativeStarterKit;
+				PRODUCT_NAME = "TripVisor";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -739,7 +741,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ReactNativeStarterKitTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TripVisorTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -748,7 +750,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ReactNativeStarterKit" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TripVisor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -757,7 +759,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ReactNativeStarterKit" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TripVisor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

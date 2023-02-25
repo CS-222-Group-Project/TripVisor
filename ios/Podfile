@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
-target 'ReactNativeStarterKit' do
+target 'TripVisor' do
   config = use_native_modules!
 
   use_react_native!(
@@ -12,7 +12,7 @@ target 'ReactNativeStarterKit' do
     :hermes_enabled => false
   )
 
-  target 'ReactNativeStarterKitTests' do
+  target 'TripVisorTests' do
     inherit! :complete
     # Pods for testing
   end
