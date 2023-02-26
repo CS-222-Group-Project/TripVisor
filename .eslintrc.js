@@ -13,8 +13,8 @@ module.exports = {
     'jest/globals': true
   },
   rules: {
-    'max-len': [2, {'code': 110, 'tabWidth': 2, 'ignoreUrls': true}],
-    'react/jsx-filename-extension': ['error', { 'extensions': ['.js', '.jsx'] }],
+    'max-len': [2, {'code': 250, 'tabWidth': 2, 'ignoreUrls': true}],
+    'react/jsx-filename-extension': ['error', { 'extensions': ['.js', '.jsx', '.ts', '.tsx'] }],
     'global-require': 'off',
     'no-console': 'off',
     'import/no-extraneous-dependencies': 'off',
