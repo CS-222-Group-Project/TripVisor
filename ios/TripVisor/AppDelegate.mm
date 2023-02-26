@@ -6,7 +6,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"My71App";
+  self.moduleName = @"TripVisor";
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

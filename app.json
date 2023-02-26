@@ -1,4 +1,7 @@
 {
-  "name": "My71App",
-  "displayName": "My71App"
+  "name": "TripVisor",
+  "expo": {
+    "name": "TripVisor",
+    "slug": "tripvisor"
+  }
 }
