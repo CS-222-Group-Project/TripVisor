@@ -1,4 +1,4 @@
-package com.my71app;
+package com.tripvisor;
 import android.content.res.Configuration;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;

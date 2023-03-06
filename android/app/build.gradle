@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.my71app"
+    namespace "com.tripvisor"
     defaultConfig {
-        applicationId "com.my71app"
+        applicationId "com.tripvisor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

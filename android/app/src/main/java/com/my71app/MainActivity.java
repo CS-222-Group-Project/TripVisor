@@ -1,4 +1,4 @@
-package com.my71app;
+package com.tripvisor;
 import expo.modules.ReactActivityDelegateWrapper;
 
 import com.facebook.react.ReactActivity;
