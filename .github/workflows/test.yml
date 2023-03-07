@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.x]
@@ -20,7 +20,7 @@ jobs:
         yarn
     - name: Lint
       run: |
-        ./node_modules/.bin/eslint "src/**/*.js"
+        ./node_modules/.bin/eslint "src/**/*.{js,jsx,ts,tsx}"
     - name: Jest Tests
       run: |
         yarn test
