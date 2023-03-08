@@ -4,61 +4,71 @@ import {
     Pressable,
     Image,
     ImageBackground,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    useColorScheme,
+    View,
 } from 'react-native';
 
 import {
-Colors,
-DebugInstructions,
-Header,
-LearnMoreLinks,
-ReloadInstructions,
+    Colors,
+    DebugInstructions,
+    Header,
+    LearnMoreLinks,
+    ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 
-import {NavigationContainer} from '@react-navigation/native';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './RootStackParams';
 
 
 type SectionProps = PropsWithChildren<{
-title: string;
+    title: string;
 }>;
 
 function Section({ children, title }: SectionProps): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
     return (
         <View style={styles.sectionContainer}>
-        <Text
-            style={[
-            styles.sectionTitle,
-            {
-                color: isDarkMode ? Colors.white : Colors.black,
-            },
-            ]}>
-            {title}
-        </Text>
-        <Text
-            style={[
-            styles.sectionDescription,
-            {
-                color: isDarkMode ? Colors.light : Colors.dark,
-            },
-            ]}>
-            {children}
-        </Text>
+            <Text
+                style={[
+                    styles.sectionTitle,
+                    {
+                        color: isDarkMode ? Colors.white : Colors.black,
+                    },
+                ]}>
+                {title}
+            </Text>
+            <Text
+                style={[
+                    styles.sectionDescription,
+                    {
+                        color: isDarkMode ? Colors.light : Colors.dark,
+                    },
+                ]}>
+                {children}
+            </Text>
         </View>
     );
 }
 
-const image = {uri: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hZCUyMHRyaXB8ZW58MHx8MHx8&w=1000&q=80'};
+const image = { uri: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hZCUyMHRyaXB8ZW58MHx8MHx8&w=1000&q=80' };
 
-const Home = ({navigation}) => {
+type ProfileScreenNavigationProp = NativeStackNavigationProp<
+    RootStackParamList,
+    'Home'
+>;
+
+type Props = {
+    navigation: ProfileScreenNavigationProp;
+};
+
+const Home = ({ navigation }: Props) => {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {
@@ -68,28 +78,28 @@ const Home = ({navigation}) => {
 
     return (
         <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={backgroundStyle}>
-            <View style={{
-                backgroundColor: isDarkMode ? Colors.black : Colors.white,
-                minHeight: '60%',
-            }}>
-            <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-                <Text style={styles.appName}>TravelVisor</Text>
-            </ImageBackground>
-            
-            <Pressable style={styles.button} onPress={() =>
-                    navigation.navigate('Profile', {name: 'Jane'}) 
-            }>
-                <Text style={styles.buttonText}>Sign In</Text>
-            </Pressable>
-            
-            {/* <Section title="Step One">
+            <StatusBar
+                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                backgroundColor={backgroundStyle.backgroundColor}
+            />
+            <ScrollView
+                contentInsetAdjustmentBehavior="automatic"
+                style={backgroundStyle}>
+                <View style={{
+                    backgroundColor: isDarkMode ? Colors.black : Colors.white,
+                    minHeight: '60%',
+                }}>
+                    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+                        <Text style={styles.appName}>TravelVisor</Text>
+                    </ImageBackground>
+
+                    <Pressable style={styles.button} onPress={() =>
+                        navigation.navigate('Profile', { name: 'Jane' })
+                    }>
+                        <Text style={styles.buttonText}>Sign In</Text>
+                    </Pressable>
+
+                    {/* <Section title="Step One">
                 Edit <Text style={styles.highlight}>App.tsx</Text> to change this
                 screen and then come back to see your edits.
             </Section>
@@ -102,9 +112,9 @@ const Home = ({navigation}) => {
             <Section title="Learn More">
                 Read the docs to discover what to do next:
             </Section> */}
-            {/* <LearnMoreLinks /> */}
-            </View>
-        </ScrollView>
+                    {/* <LearnMoreLinks /> */}
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -121,7 +131,7 @@ const styles = StyleSheet.create({
         minHeight: '40%',
     },
     appName: {
-        textAlign:'center',
+        textAlign: 'center',
         color: 'white',
         margin: 22,
         fontSize: 54,
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
         boxShadow: '0 9px #999',
     },
     buttonText: {
-        textAlign:'center',
+        textAlign: 'center',
         color: 'white',
         margin: 22,
         fontSize: 24,

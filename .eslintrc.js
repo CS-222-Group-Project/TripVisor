@@ -1,20 +1,20 @@
 module.exports = {
   extends: 'airbnb',
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   plugins: [
-    'jest'
+    'jest',
   ],
   parserOptions: {
     ecmaFeatures: {
-      classes: true
-    }
+      classes: true,
+    },
   },
   env: {
-    'jest/globals': true
+    'jest/globals': true,
   },
   rules: {
-    'max-len': [2, {'code': 250, 'tabWidth': 2, 'ignoreUrls': true}],
-    'react/jsx-filename-extension': ['error', { 'extensions': ['.js', '.jsx', '.ts', '.tsx'] }],
+    'max-len': [2, { code: 250, tabWidth: 2, ignoreUrls: true }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'global-require': 'off',
     'no-console': 'off',
     'import/no-extraneous-dependencies': 'off',
@@ -30,5 +30,5 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-fragments': 'off',
-  }
+  },
 };
