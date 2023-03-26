@@ -15,6 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Image,
 } from 'react-native';
 
 import {
@@ -28,8 +29,9 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/Home'
-import Auth from './src/Auth'
+import Auth from './src/Auth.js'
 import { RootStackParamList } from './src/RootStackParams';
+
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -71,7 +73,6 @@ function Section({ children, title }: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
