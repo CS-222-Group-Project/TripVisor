@@ -1,60 +1,63 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { PropsWithChildren } from 'react';
 import {
-    Pressable,
-    Image,
-    ImageBackground,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
-    View,
+  Animated,
+  Pressable,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
 } from 'react-native';
 
 import {
-    Colors,
-    DebugInstructions,
-    Header,
-    LearnMoreLinks,
-    ReloadInstructions,
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
 
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import TV_LOGO_BACK from './assets/logoBack.png';
+import TV_LOGO_VISOR from './assets/logoVisor.png';
 import { RootStackParamList } from './RootStackParams';
-
 
 type SectionProps = PropsWithChildren<{
     title: string;
 }>;
 
 function Section({ children, title }: SectionProps): JSX.Element {
-    const isDarkMode = useColorScheme() === 'dark';
-    return (
-        <View style={styles.sectionContainer}>
-            <Text
-                style={[
-                    styles.sectionTitle,
-                    {
-                        color: isDarkMode ? Colors.white : Colors.black,
-                    },
-                ]}>
-                {title}
-            </Text>
-            <Text
-                style={[
-                    styles.sectionDescription,
-                    {
-                        color: isDarkMode ? Colors.light : Colors.dark,
-                    },
-                ]}>
-                {children}
-            </Text>
-        </View>
-    );
+  const isDarkMode = useColorScheme() === 'dark';
+  return (
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}
+      >
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}
+      >
+        {children}
+      </Text>
+    </View>
+  );
 }
 
 const image = { uri: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hZCUyMHRyaXB8ZW58MHx8MHx8&w=1000&q=80' };
@@ -68,38 +71,180 @@ type Props = {
     navigation: ProfileScreenNavigationProp;
 };
 
-const Home = ({ navigation }: Props) => {
-    const isDarkMode = useColorScheme() === 'dark';
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    minHeight: '100%',
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    maxHeight: '100%',
+  },
+  appName: {
+    position: 'absolute',
+    // height: '0%',
+    width: '100%',
+    textAlign: 'center',
+    top: '55%',
+    zIndex: 4,
+    elevation: 4,
+    color: 'white',
+    // margin: 22,
+    fontSize: 54,
+    fontWeight: '600',
+    backgroundColor: '#000000c0',
+  },
+  button: {
+    maxWidth: '70%',
+    marginLeft: '15%',
+    top: '70%',
+    bottom: '10%',
+    fontSize: 24,
+    cursor: 'pointer',
+    textAlign: 'center',
+    textDecoration: 'none',
+    outline: 'none',
+    // color: '#fff',
+    // backgroundColor: '#133F50',
+    border: 'none',
+    borderRadius: 25,
+    boxShadow: '0 9px #999',
+  },
+  buttonText: {
+    textAlign: 'center',
+    // color: 'white',
+    margin: 22,
+    fontSize: 24,
+  },
+  fadingContainer: {
+    minHeight: '50%',
+    // padding: 20,
+    // backgroundColor: 'powderblue',
+  },
+  areaContainer: {
+    height: '40%',
+    backgroundColor: '#A2B096',
+  },
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+});
 
-    const backgroundStyle = {
-        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-        minHeight: '100%',
-    };
+function Home({ navigation }: Props) {
+  const isDarkMode = useColorScheme() === 'dark';
 
-    return (
-        <SafeAreaView style={backgroundStyle}>
-            <StatusBar
-                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                backgroundColor={backgroundStyle.backgroundColor}
-            />
-            <ScrollView
-                contentInsetAdjustmentBehavior="automatic"
-                style={backgroundStyle}>
-                <View style={{
-                    backgroundColor: isDarkMode ? Colors.black : Colors.white,
-                    minHeight: '60%',
-                }}>
-                    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-                        <Text style={styles.appName}>TravelVisor</Text>
-                    </ImageBackground>
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+    minHeight: '100%',
+  };
 
-                    <Pressable style={styles.button} onPress={() =>
-                        navigation.navigate('Profile', { name: 'Jane' })
-                    }>
-                        <Text style={styles.buttonText}>Sign In</Text>
-                    </Pressable>
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnimTwo = useRef(new Animated.Value(0)).current;
 
-                    {/* <Section title="Step One">
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 3 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const fadeInTwo = () => {
+    // Will change fadeAnim value to 1 in 3 seconds
+    Animated.timing(fadeAnimTwo, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    fadeIn();
+    setTimeout(() => { fadeInTwo(); }, 2000);
+  }, []);
+
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}
+      >
+        <View style={{
+          backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+          minHeight: '100%',
+        }}
+        >
+          <ImageBackground source={TV_LOGO_BACK} resizeMode="cover" style={styles.image}>
+            <Animated.View
+              style={[
+                styles.fadingContainer,
+                {
+                  // Bind opacity to animated value
+                  opacity: fadeAnim,
+                },
+              ]}
+            >
+              <ImageBackground source={TV_LOGO_VISOR} resizeMode="cover" style={styles.image} />
+            </Animated.View>
+          </ImageBackground>
+          <Animated.View
+            style={[
+              styles.appName,
+              {
+                // Bind opacity to animated value
+                opacity: fadeAnim,
+              },
+            ]}
+          >
+            <Text style={styles.appName}>TravelVisor</Text>
+          </Animated.View>
+          <View style={styles.areaContainer}>
+            <Animated.View
+              style={[
+                styles.areaContainer,
+                {
+                // Bind opacity to animated value
+                  opacity: fadeAnimTwo,
+                },
+              ]}
+            >
+
+              <Pressable
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                  // color: isDarkMode ? Colors.black : Colors.white,
+                  },
+                ]}
+                onPress={() => navigation.navigate('Profile', { name: 'Jane' })}
+              >
+                <Text style={styles.buttonText}>Sign In</Text>
+              </Pressable>
+
+            </Animated.View>
+          </View>
+
+          {/* <Section title="Step One">
                 Edit <Text style={styles.highlight}>App.tsx</Text> to change this
                 screen and then come back to see your edits.
             </Section>
@@ -112,68 +257,11 @@ const Home = ({ navigation }: Props) => {
             <Section title="Learn More">
                 Read the docs to discover what to do next:
             </Section> */}
-                    {/* <LearnMoreLinks /> */}
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );
+          {/* <LearnMoreLinks /> */}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        minHeight: '100%',
-    },
-    image: {
-        flex: 1,
-        justifyContent: 'center',
-        minHeight: '40%',
-    },
-    appName: {
-        textAlign: 'center',
-        color: 'white',
-        margin: 22,
-        fontSize: 54,
-        fontWeight: '600',
-        backgroundColor: '#000000c0',
-    },
-    button: {
-        maxWidth: '70%',
-        marginLeft: '15%',
-        fontSize: 24,
-        cursor: 'pointer',
-        textAlign: 'center',
-        textDecoration: 'none',
-        outline: 'none',
-        color: '#fff',
-        backgroundColor: '#133F50',
-        border: 'none',
-        borderRadius: 25,
-        boxShadow: '0 9px #999',
-    },
-    buttonText: {
-        textAlign: 'center',
-        color: 'white',
-        margin: 22,
-        fontSize: 24,
-    },
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-    },
-    highlight: {
-        fontWeight: '700',
-    },
-});
 
 export default Home;

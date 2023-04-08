@@ -27,15 +27,11 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/Home'
-import Auth from './src/Auth'
+import Home from './src/Home';
+import Auth from './src/Auth';
 import { RootStackParamList } from './src/RootStackParams';
 
-
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
-
-
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -51,7 +47,8 @@ function Section({ children, title }: SectionProps): JSX.Element {
           {
             color: isDarkMode ? Colors.white : Colors.black,
           },
-        ]}>
+        ]}
+      >
         {title}
       </Text>
       <Text
@@ -60,7 +57,8 @@ function Section({ children, title }: SectionProps): JSX.Element {
           {
             color: isDarkMode ? Colors.light : Colors.dark,
           },
-        ]}>
+        ]}
+      >
         {children}
       </Text>
     </View>
@@ -82,9 +80,10 @@ function App(): JSX.Element {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: 'Welcome' }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="Profile" component={Auth} />
+        {/* <Stack.Screen name="Profile" component={Auth} /> */}
 
       </Stack.Navigator>
     </NavigationContainer>
