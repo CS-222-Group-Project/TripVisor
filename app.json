@@ -2,6 +2,23 @@
   "name": "TripVisor",
   "expo": {
     "name": "TripVisor",
-    "slug": "tripvisor"
+    "owner": "pradnyank",
+    "slug": "tripvisor",
+    "scheme": "com.tripvisor.authsessiongoogle",
+    "extra": {
+      "eas": {
+        "projectId": "cd57c206-baac-4c10-b9a2-4a968049c187"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "org.reactjs.native.example.TripVisor"
+    }
+  },
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.tripvisor.authsessiongoogle"
+  },
+  "android": {
+    "package": "com.tripvisor.authsessiongoogle"
   }
 }

@@ -29,7 +29,7 @@ import TV_LOGO_VISOR from './assets/logoVisor.png';
 import { RootStackParamList } from './RootStackParams';
 
 type SectionProps = PropsWithChildren<{
-    title: string;
+  title: string;
 }>;
 
 function Section({ children, title }: SectionProps): JSX.Element {
@@ -60,15 +60,17 @@ function Section({ children, title }: SectionProps): JSX.Element {
   );
 }
 
-const image = { uri: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hZCUyMHRyaXB8ZW58MHx8MHx8&w=1000&q=80' };
+const image = {
+  uri: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hZCUyMHRyaXB8ZW58MHx8MHx8&w=1000&q=80',
+};
 
 type ProfileScreenNavigationProp = NativeStackNavigationProp<
-    RootStackParamList,
-    'Home'
+  RootStackParamList,
+  'Home'
 >;
 
 type Props = {
-    navigation: ProfileScreenNavigationProp;
+  navigation: ProfileScreenNavigationProp;
 };
 
 const styles = StyleSheet.create({
