@@ -16,6 +16,7 @@ module.exports = {
     'max-len': [2, { code: 250, tabWidth: 4, ignoreUrls: true }],
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'global-require': 'off',
+    'no-use-before-define': 'off',
     'no-console': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/extensions': 'off',

@@ -2,6 +2,7 @@
   "name": "TripVisor",
   "expo": {
     "name": "TripVisor",
+    "owner": "pradnyank",
     "slug": "tripvisor",
     "scheme": "com.tripvisor.authsessiongoogle",
     "extra": {
