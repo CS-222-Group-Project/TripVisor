@@ -22,9 +22,10 @@ function App(): JSX.Element {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: 'Welcome' }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="Profile" component={Auth} />
+        {/* <Stack.Screen name="Profile" component={Auth} /> */}
 
       </Stack.Navigator>
     </NavigationContainer>
