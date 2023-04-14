@@ -8,6 +8,9 @@ import {
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
+import { DefaultAzureCredential } from '@azure/identity';
+import { CosmosClient } from '@azure/cosmos';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CAR_IMAGE from './assets/TravelCar.png';
 import GOOG_IMAGE from './assets/google-logo.png';
 
@@ -47,6 +50,33 @@ export default function App(): JSX.Element {
 
       const user = await response.json();
       setUserInfo(user);
+      storeUserInfo();
+    } catch (error) {
+      // Add your own error handler here
+    }
+  };
+
+  const storeUserInfo = async () => {
+    // store user info in the database
+    try {
+      const endpoint = 'https://trip-visor.documents.azure.com:443/';
+      const cosmosClient = new CosmosClient({
+        endpoint,
+        aadCredentials: new DefaultAzureCredential(),
+      });
+      const databaseId = 'Users';
+      const containerId = 'user-id';
+      const container = cosmosClient.database(databaseId).container(containerId);
+
+      // check if user already exists
+      if (await container.item(userInfo.id).read() === null) {
+        await container.items.create({
+          id: userInfo.id,
+          name: userInfo.name,
+          email: userInfo.email,
+          picture: userInfo.picture,
+        });
+      }
     } catch (error) {
       // Add your own error handler here
     }
