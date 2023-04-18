@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, Text, View, Button, Image, useColorScheme,
+  StyleSheet, Pressable, Text, View, Button, Image, useColorScheme,
 } from 'react-native';
 import {
   Colors,
@@ -8,12 +8,24 @@ import {
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
+import { NavigationContainer } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import CAR_IMAGE from './assets/TravelCar.png';
 import GOOG_IMAGE from './assets/google-logo.png';
+import { RootStackParamList } from './RootStackParams';
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function App(): JSX.Element {
+type ProfileScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+
+type Props = {
+  navigation: ProfileScreenNavigationProp;
+};
+
+function Auth({ navigation }: Props) {
   const isDarkMode = useColorScheme() === 'dark';
   const [token, setToken] = useState<string>('');
   const [userInfo, setUserInfo] = useState<any>(null);
@@ -77,7 +89,21 @@ export default function App(): JSX.Element {
 
         </View>
       ) : (
-        <Text style={styles.text}>{userInfo.name}</Text>
+        <View style={styles.box}>
+          <Text style={styles.text}>{userInfo.name}</Text>
+          <Pressable
+            style={[
+              styles.button,
+              {
+                backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                // color: isDarkMode ? Colors.black : Colors.white,
+              },
+            ]}
+            onPress={() => navigation.navigate('Routes', { name: 'Jane' })}
+          >
+            <Text style={styles.buttonText}>Sign In</Text>
+          </Pressable>
+        </View>
       )}
     </View>
   );
@@ -124,6 +150,28 @@ const styles = StyleSheet.create({
     height: 65,
     marginLeft: 76,
     marginTop: 82,
+  },
+  button: {
+    maxWidth: '70%',
+    marginLeft: '15%',
+    top: '70%',
+    bottom: '10%',
+    fontSize: 24,
+    // cursor: 'pointer',
+    textAlign: 'center',
+    // textDecoration: 'none',
+    // outline: 'none',
+    // color: '#fff',
+    // backgroundColor: '#133F50',
+    border: 'none',
+    borderRadius: 25,
+    boxShadow: '0 9px #999',
+  },
+  buttonText: {
+    textAlign: 'center',
+    // color: 'white',
+    margin: 22,
+    fontSize: 24,
   },
 });
 
@@ -174,4 +222,4 @@ const styles = StyleSheet.create({
 //   );
 // }
 
-// export default App;
+export default Auth;
