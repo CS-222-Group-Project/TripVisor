@@ -11,6 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/Home';
 import Auth from './src/Auth';
+import Routes from './src/Routes';
 import { RootStackParamList } from './src/RootStackParams';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -25,7 +26,7 @@ function App(): JSX.Element {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Profile" component={Auth} />
-        {/* <Stack.Screen name="Profile" component={Auth} /> */}
+        <Stack.Screen name="Routes" component={Routes} />
 
       </Stack.Navigator>
     </NavigationContainer>
