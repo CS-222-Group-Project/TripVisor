@@ -90,9 +90,19 @@ function Auth({ navigation }: Props) {
         </View>
       ) : (
         <View style={styles.box}>
-          <Text style={{fontSize: 35, fontWeight: 'bold', marginBottom: 10, textAlign: 'center', marginTop: '-60%'}}>Welcome</Text>
-          <Image source={{uri: userInfo.picture}} style={{width: 100, height: 100, borderRadius: 50, marginTop: 82, alignSelf: 'center'}} />
-          <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>{userInfo.name}</Text>
+          <Text style={{
+            fontSize: 35, fontWeight: 'bold', marginBottom: 10, textAlign: 'center', marginTop: '-60%',
+          }}
+          >
+            Welcome
+          </Text>
+          <Image
+            source={{ uri: userInfo.picture }}
+            style={{
+              width: 100, height: 100, borderRadius: 50, marginTop: 82, alignSelf: 'center',
+            }}
+          />
+          <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{userInfo.name}</Text>
 
           <Pressable
             style={[
