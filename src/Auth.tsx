@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, Pressable, Text, View, Button, Image, useColorScheme,
 } from 'react-native';
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
