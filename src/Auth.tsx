@@ -43,6 +43,9 @@ function Auth({ navigation }: Props) {
       setToken(response.authentication.accessToken);
       getUserInfo();
     }
+    if (token !== '') {
+      navigation.navigate('Routes', { name: 'Jane' });
+    }
   }, [response, token]);
 
   const getUserInfo = async () => {
@@ -98,7 +101,19 @@ function Auth({ navigation }: Props) {
             ]}
             onPress={() => navigation.navigate('Routes', { name: 'Jane' })}
           >
-            <Text style={styles.buttonText}>Sign In</Text>
+            <Text style={styles.buttonText}>Continue to Maps</Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.button,
+              {
+                backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                // color: isDarkMode ? Colors.black : Colors.white,
+              },
+            ]}
+            onPress={() => setUserInfo(null)}
+          >
+            <Text style={styles.buttonText}>Log Out</Text>
           </Pressable>
         </View>
       )}
@@ -130,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: 350,
     height: 250,
-    borderRadius: '25',
+    borderRadius: 25,
     textAlign: 'center',
     alignContent: 'center',
     paddingTop: '25%',
@@ -157,7 +172,11 @@ const styles = StyleSheet.create({
     // cursor: 'pointer',
     textAlign: 'center',
     // textDecoration: 'none',
-    // outline: 'none',
+    // add border
+    borderColor: '#133F50',
+    borderWidth: 3,
+    margin: 4,
+
     // color: '#fff',
     // backgroundColor: '#133F50',
     border: 'none',
@@ -171,52 +190,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
-
-// function App(): JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark';
-
-//   const backgroundStyle = {
-//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-//   };
-
-//   return (
-//     <SafeAreaView style={backgroundStyle}>
-//       <StatusBar
-//         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-//         backgroundColor={backgroundStyle.backgroundColor}
-//       />
-//       <ScrollView
-//         contentInsetAdjustmentBehavior="automatic"
-//         style={backgroundStyle}
-//       >
-//         <Header />
-//         <View
-//           style={{
-//             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-//           }}
-//         >
-//           <Section title="Step One">
-//             Edit
-//             {' '}
-//             <Text style={styles.highlight}>App.tsx</Text>
-//             {' '}
-//             to change this
-//             screen and then come back to see your edits.
-//           </Section>
-//           <Section title="See Your Changes">
-//             <ReloadInstructions />
-//           </Section>
-//           <Section title="Debug">
-//             <DebugInstructions />
-//           </Section>
-//           <Section title="Learn More">
-//             Read the docs to discover what to do next:
-//           </Section>
-//           <LearnMoreLinks />
-//         </View>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// }
 
 export default Auth;
