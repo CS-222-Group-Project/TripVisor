@@ -89,17 +89,25 @@ function Auth({ navigation }: Props) {
 
         </View>
       ) : (
-        <View style={styles.box}>
+        <View style={styles.boxTwo}>
           <Text style={{
-            fontSize: 35, fontWeight: 'bold', marginBottom: 10, textAlign: 'center', marginTop: '-60%',
+            fontSize: 65, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-70%', height: 65, width: 350, color: 'rgb(9,9,121)',
           }}
           >
-            Welcome
+            TravelVisor
+
+          </Text>
+          <Text style={{
+            fontSize: 45, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-40%', color: 'white', height: 45, width: 350,
+          }}
+          >
+            Welcome to
+
           </Text>
           <Image
             source={{ uri: userInfo.picture }}
             style={{
-              width: 100, height: 100, borderRadius: 50, marginTop: 82, alignSelf: 'center',
+              width: 100, height: 100, borderRadius: 50, marginTop: 220, alignSelf: 'center',
             }}
           />
           <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{userInfo.name}</Text>
@@ -108,7 +116,7 @@ function Auth({ navigation }: Props) {
             style={[
               styles.button,
               {
-                backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                backgroundColor: isDarkMode ? '#007700' : '#008800',
                 // color: isDarkMode ? Colors.black : Colors.white,
               },
             ]}
@@ -120,7 +128,7 @@ function Auth({ navigation }: Props) {
             style={[
               styles.button,
               {
-                backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                backgroundColor: isDarkMode ? '#770000' : '#880000',
                 // color: isDarkMode ? Colors.black : Colors.white,
               },
             ]}
@@ -163,6 +171,16 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     paddingTop: '25%',
   },
+  boxTwo: {
+    backgroundColor: '#fff',
+    width: 350,
+    height: 200,
+    // marginBottom: 200,
+    borderRadius: 25,
+    textAlign: 'center',
+    alignContent: 'center',
+    paddingTop: '25%',
+  },
   car: {
     position: 'absolute',
     width: 380,
@@ -198,7 +216,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    // color: 'white',
+    color: 'white',
     margin: 22,
     fontSize: 24,
   },

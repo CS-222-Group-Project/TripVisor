@@ -17,7 +17,19 @@ import {
 import Constants from 'expo-constants';
 import React, { useRef, useState } from 'react';
 import MapViewDirections from 'react-native-maps-directions';
+import { NavigationContainer } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './RootStackParams';
 import { gKey } from './envs';
+
+type ProfileScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+
+type Props = {
+  navigation: ProfileScreenNavigationProp;
+};
 
 // const gKey = process.env.REACT_APP_G_KEY;
 
@@ -65,12 +77,21 @@ function InputAutocomplete({
   );
 }
 
-export default function App() {
+function Routes({ navigation }: Props) {
   const [origin, setOrigin] = useState<LatLng | null>();
   const [destination, setDestination] = useState<LatLng | null>();
   const [showDirections, setShowDirections] = useState(false);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
+  //   this.state = {
+  //     region: {
+  //       latitude: Lat,
+  //       longitude: LONGITUDE,
+  //       latitudeDelta: LATITUDE_DELTA,
+  //       longitudeDelta: LONGITUDE_DELTA,
+  //     },
+  //     marker: null,
+  //   };
 
   const mapRef = useRef<MapView>(null);
 
@@ -125,7 +146,10 @@ export default function App() {
         style={styles.map}
         provider={PROVIDER_DEFAULT}
         initialRegion={initPos}
+        onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate })}
       >
+        {/* this.state.marker &&
+        <Marker coordinate={this.state.marker} /> */}
         {origin && <Marker coordinate={origin} />}
         {destination && <Marker coordinate={destination} />}
         {showDirections && origin && destination && (
@@ -157,6 +181,11 @@ export default function App() {
           <Text style={styles.buttonText}>Make Route</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.menuButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile', { name: 'Jane' })}>
+          <Text style={styles.menuButtonText}>⚙️</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -176,6 +205,16 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     top: Constants.statusBarHeight,
   },
+  menuButton: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    backgroundColor: 'white',
+    // padding: 8,
+    borderRadius: 18,
+    bottom: 30,
+    right: 30,
+  },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
@@ -194,4 +233,11 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
   },
+  menuButtonText: {
+    top: 10,
+    fontSize: 25,
+    textAlign: 'center',
+  },
 });
+
+export default Routes;

@@ -120,6 +120,17 @@ const styles = StyleSheet.create({
     height: '40%',
     backgroundColor: '#A2B096',
   },
+  botContainer: {
+    position: 'absolute',
+    // backgroundColor: '#fff',
+    backgroundColor: '#A2B096',
+    top: '1143%',
+    height: 10,
+    width: '100%',
+    borderWidth: 5,
+    borderColor: '#FFFF00',
+    borderStyle: 'dashed',
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
@@ -183,7 +194,7 @@ function Home({ navigation }: Props) {
         style={backgroundStyle}
       >
         <View style={{
-          backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+          backgroundColor: isDarkMode ? '#5e596D' : '#D6DAEA',
           minHeight: '100%',
         }}
         >
@@ -227,7 +238,7 @@ function Home({ navigation }: Props) {
                   styles.button,
                   {
                     backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
-                  // color: isDarkMode ? Colors.black : Colors.white,
+                    // color: isDarkMode ? Colors.black : Colors.white,
                   },
                 ]}
                 onPress={() => navigation.navigate('Profile', { name: 'Jane' })}
@@ -238,6 +249,7 @@ function Home({ navigation }: Props) {
             </Animated.View>
           </View>
         </View>
+        <View style={styles.botContainer} />
       </ScrollView>
     </SafeAreaView>
   );

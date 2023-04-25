@@ -26,7 +26,7 @@ function App(): JSX.Element {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Profile" component={Auth} />
-        <Stack.Screen name="Routes" component={Routes} />
+        <Stack.Screen name="Routes" component={Routes} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
