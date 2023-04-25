@@ -19,6 +19,8 @@ import React, { useRef, useState } from 'react';
 import MapViewDirections from 'react-native-maps-directions';
 import { gKey } from './envs';
 
+// const gKey = process.env.REACT_APP_G_KEY;
+
 const { width, height } = Dimensions.get('window');
 
 const aspect = width / height;
