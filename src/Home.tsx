@@ -238,7 +238,6 @@ function Home({ navigation }: Props) {
                   styles.button,
                   {
                     backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
-                    // color: isDarkMode ? Colors.black : Colors.white,
                   },
                 ]}
                 onPress={() => navigation.navigate('Profile', { name: 'Jane' })}

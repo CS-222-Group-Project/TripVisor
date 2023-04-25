@@ -8,6 +8,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
 import {
   GooglePlaceDetail,
@@ -81,6 +82,7 @@ function Routes({ navigation }: Props) {
   const [origin, setOrigin] = useState<LatLng | null>();
   const [destination, setDestination] = useState<LatLng | null>();
   const [showDirections, setShowDirections] = useState(false);
+  const isDarkMode = useColorScheme() === 'dark';
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
   //   this.state = {
@@ -107,7 +109,7 @@ function Routes({ navigation }: Props) {
   const edgePaddingValue = 70;
 
   const edgePadding = {
-    top: Constants.statusBarHeight + height / 4 + edgePaddingValue, // move top below search bar
+    top: height / 5 + edgePaddingValue, // move top below search bar
     right: edgePaddingValue,
     bottom: edgePaddingValue,
     left: edgePaddingValue,
@@ -181,7 +183,13 @@ function Routes({ navigation }: Props) {
           <Text style={styles.buttonText}>Make Route</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.menuButton}>
+      <View style={[
+        styles.menuButton,
+        {
+          backgroundColor: isDarkMode ? '#55596D' : '#FFF',
+        },
+      ]}
+      >
         <TouchableOpacity onPress={() => navigation.navigate('Profile', { name: 'Jane' })}>
           <Text style={styles.menuButtonText}>⚙️</Text>
         </TouchableOpacity>
@@ -202,7 +210,7 @@ const styles = StyleSheet.create({
     width: '70%',
     backgroundColor: 'white',
     padding: 8,
-    borderRadius: 4,
+    borderRadius: 10,
     top: Constants.statusBarHeight,
   },
   menuButton: {
@@ -222,13 +230,13 @@ const styles = StyleSheet.create({
   input: {
     borderColor: 'red',
     borderWidth: 3.5,
-    borderRadius: 2,
+    borderRadius: 18,
   },
   button: {
     backgroundColor: 'green',
     paddingVertical: 5,
     marginTop: 1,
-    borderRadius: 4,
+    borderRadius: 18,
   },
   buttonText: {
     textAlign: 'center',

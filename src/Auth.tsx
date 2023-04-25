@@ -95,14 +95,12 @@ function Auth({ navigation }: Props) {
           }}
           >
             TravelVisor
-
           </Text>
           <Text style={{
             fontSize: 45, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-40%', color: 'white', height: 45, width: 350,
           }}
           >
             Welcome to
-
           </Text>
           <Image
             source={{ uri: userInfo.picture }}
@@ -117,7 +115,6 @@ function Auth({ navigation }: Props) {
               styles.button,
               {
                 backgroundColor: isDarkMode ? '#007700' : '#008800',
-                // color: isDarkMode ? Colors.black : Colors.white,
               },
             ]}
             onPress={() => navigation.navigate('Routes', { name: 'Jane' })}
@@ -129,7 +126,6 @@ function Auth({ navigation }: Props) {
               styles.button,
               {
                 backgroundColor: isDarkMode ? '#770000' : '#880000',
-                // color: isDarkMode ? Colors.black : Colors.white,
               },
             ]}
             onPress={() => setUserInfo(null)}
