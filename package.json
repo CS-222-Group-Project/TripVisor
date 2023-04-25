@@ -12,6 +12,7 @@
   "dependencies": {
     "@expo/config-plugins": "~6.0.0",
     "@expo/prebuild-config": "~6.0.0",
+    "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "babel-eslint": "^10.1.0",
