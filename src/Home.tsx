@@ -16,10 +16,6 @@ import {
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -59,10 +55,6 @@ function Section({ children, title }: SectionProps): JSX.Element {
     </View>
   );
 }
-
-const image = {
-  uri: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hZCUyMHRyaXB8ZW58MHx8MHx8&w=1000&q=80',
-};
 
 type ProfileScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -245,21 +237,6 @@ function Home({ navigation }: Props) {
 
             </Animated.View>
           </View>
-
-          {/* <Section title="Step One">
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-                screen and then come back to see your edits.
-            </Section>
-            <Section title="See Your Changes">
-                <ReloadInstructions />
-            </Section>
-            <Section title="Debug">
-                <DebugInstructions />
-            </Section>
-            <Section title="Learn More">
-                Read the docs to discover what to do next:
-            </Section> */}
-          {/* <LearnMoreLinks /> */}
         </View>
       </ScrollView>
     </SafeAreaView>

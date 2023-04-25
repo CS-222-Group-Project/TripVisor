@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, Text, View, Button, Image, useColorScheme,
+  StyleSheet, Pressable, Text, View, Button, Image, useColorScheme,
 } from 'react-native';
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
+import { NavigationContainer } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import CAR_IMAGE from './assets/TravelCar.png';
 import GOOG_IMAGE from './assets/google-logo.png';
+import { RootStackParamList } from './RootStackParams';
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function App(): JSX.Element {
+type ProfileScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+
+type Props = {
+  navigation: ProfileScreenNavigationProp;
+};
+
+function Auth({ navigation }: Props) {
   const isDarkMode = useColorScheme() === 'dark';
   const [token, setToken] = useState<string>('');
   const [userInfo, setUserInfo] = useState<any>(null);
@@ -33,6 +42,9 @@ export default function App(): JSX.Element {
     if (response?.type === 'success') {
       setToken(response.authentication.accessToken);
       getUserInfo();
+    }
+    if (token !== '') {
+      navigation.navigate('Routes', { name: 'Jane' });
     }
   }, [response, token]);
 
@@ -77,7 +89,46 @@ export default function App(): JSX.Element {
 
         </View>
       ) : (
-        <Text style={styles.text}>{userInfo.name}</Text>
+        <View style={styles.box}>
+          <Text style={{
+            fontSize: 35, fontWeight: 'bold', marginBottom: 10, textAlign: 'center', marginTop: '-60%',
+          }}
+          >
+            Welcome
+          </Text>
+          <Image
+            source={{ uri: userInfo.picture }}
+            style={{
+              width: 100, height: 100, borderRadius: 50, marginTop: 82, alignSelf: 'center',
+            }}
+          />
+          <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{userInfo.name}</Text>
+
+          <Pressable
+            style={[
+              styles.button,
+              {
+                backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                // color: isDarkMode ? Colors.black : Colors.white,
+              },
+            ]}
+            onPress={() => navigation.navigate('Routes', { name: 'Jane' })}
+          >
+            <Text style={styles.buttonText}>Continue to Maps</Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.button,
+              {
+                backgroundColor: isDarkMode ? '#55596D' : '#D6DAEA',
+                // color: isDarkMode ? Colors.black : Colors.white,
+              },
+            ]}
+            onPress={() => setUserInfo(null)}
+          >
+            <Text style={styles.buttonText}>Log Out</Text>
+          </Pressable>
+        </View>
       )}
     </View>
   );
@@ -107,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: 350,
     height: 250,
-    borderRadius: '25',
+    borderRadius: 25,
     textAlign: 'center',
     alignContent: 'center',
     paddingTop: '25%',
@@ -125,53 +176,32 @@ const styles = StyleSheet.create({
     marginLeft: 76,
     marginTop: 82,
   },
+  button: {
+    maxWidth: '70%',
+    marginLeft: '15%',
+    top: '70%',
+    bottom: '10%',
+    fontSize: 24,
+    // cursor: 'pointer',
+    textAlign: 'center',
+    // textDecoration: 'none',
+    // add border
+    borderColor: '#133F50',
+    borderWidth: 3,
+    margin: 4,
+
+    // color: '#fff',
+    // backgroundColor: '#133F50',
+    border: 'none',
+    borderRadius: 25,
+    boxShadow: '0 9px #999',
+  },
+  buttonText: {
+    textAlign: 'center',
+    // color: 'white',
+    margin: 22,
+    fontSize: 24,
+  },
 });
 
-// function App(): JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark';
-
-//   const backgroundStyle = {
-//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-//   };
-
-//   return (
-//     <SafeAreaView style={backgroundStyle}>
-//       <StatusBar
-//         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-//         backgroundColor={backgroundStyle.backgroundColor}
-//       />
-//       <ScrollView
-//         contentInsetAdjustmentBehavior="automatic"
-//         style={backgroundStyle}
-//       >
-//         <Header />
-//         <View
-//           style={{
-//             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-//           }}
-//         >
-//           <Section title="Step One">
-//             Edit
-//             {' '}
-//             <Text style={styles.highlight}>App.tsx</Text>
-//             {' '}
-//             to change this
-//             screen and then come back to see your edits.
-//           </Section>
-//           <Section title="See Your Changes">
-//             <ReloadInstructions />
-//           </Section>
-//           <Section title="Debug">
-//             <DebugInstructions />
-//           </Section>
-//           <Section title="Learn More">
-//             Read the docs to discover what to do next:
-//           </Section>
-//           <LearnMoreLinks />
-//         </View>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// }
-
-// export default App;
+export default Auth;
