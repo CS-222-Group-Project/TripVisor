@@ -5,6 +5,7 @@ import {
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import CAR_IMAGE from './assets/TravelCar.png';
@@ -37,15 +38,18 @@ function Auth({ navigation }: Props) {
     iosClientId: '527438918447-dsburhe7hgr7mmq0r5vf3vlhasmbm19c.apps.googleusercontent.com',
     expoClientId: '527438918447-p69ka8sj5gfknmfvlisv0s0m359imepg.apps.googleusercontent.com',
   });
-
   useEffect(() => {
     if (response?.type === 'success') {
       setToken(response.authentication.accessToken);
       getUserInfo();
+      // Store the token and user info in AsyncStorage
+      storeData(response.authentication.accessToken, userInfo);
     }
     if (token !== '') {
       navigation.navigate('Routes', { name: 'Jane' });
     }
+    // Retrieve the token and user info from AsyncStorage if they exist
+    getData();
   }, [response, token]);
 
   const getUserInfo = async () => {
@@ -60,6 +64,30 @@ function Auth({ navigation }: Props) {
       const user = await response.json();
       setUserInfo(user);
     } catch (error) {
+      // Add your own error handler here
+    }
+  };
+
+  // Function to store the token and user info in AsyncStorage
+  const storeData = async (dataToken : string, user : any) => {
+    try {
+      await AsyncStorage.setItem('token', dataToken);
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+    } catch (e) {
+      // Add your own error handler here
+    }
+  };
+
+  // Function to retrieve the token and user info from AsyncStorage
+  const getData = async () => {
+    try {
+      const dataToken = await AsyncStorage.getItem('token');
+      const user = await AsyncStorage.getItem('user');
+      if (dataToken !== null && user !== null) {
+        setToken(dataToken);
+        setUserInfo(JSON.parse(user));
+      }
+    } catch (e) {
       // Add your own error handler here
     }
   };
