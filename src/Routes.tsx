@@ -148,7 +148,7 @@ function Routes({ navigation }: Props) {
         style={styles.map}
         provider={PROVIDER_DEFAULT}
         initialRegion={initPos}
-        onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate })}
+        // onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate })}
       >
         {/* this.state.marker &&
         <Marker coordinate={this.state.marker} /> */}
