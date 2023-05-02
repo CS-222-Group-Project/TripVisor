@@ -5,11 +5,13 @@ import MapView, {
 import {
   StyleSheet,
   View,
+  ScrollView,
   Dimensions,
   Text,
   TouchableOpacity,
   useColorScheme,
   Linking,
+  RefreshControl,
 } from 'react-native';
 import {
   GooglePlaceDetail,
@@ -50,21 +52,23 @@ const initPos = {
 };
 
 type InputAutocompleteProps = {
-  label: string;
+  label?: string;
   placeholder?: string;
   onPlaceSelected: (details: GooglePlaceDetail | null) => void;
+  subType?: boolean;
 };
 
 function InputAutocomplete({
   label,
   placeholder,
   onPlaceSelected,
+  subType,
 }: InputAutocompleteProps) {
   return (
     <>
       <Text>{label}</Text>
       <GooglePlacesAutocomplete
-        styles={{ textInput: styles.input }}
+        styles={{ textInput: subType ? styles.subinput : styles.input }}
         placeholder={placeholder || ''}
         fetchDetails
         onPress={(data, details = null) => {
@@ -83,7 +87,9 @@ function Routes({ navigation }: Props) {
   const [origin, setOrigin] = useState<LatLng | null>();
   const [destination, setDestination] = useState<LatLng | null>();
   const [waypoints, setWaypoints] = useState<LatLng[]>([]);
+  const [waypointNames, setWaypointNames] = useState<Array<string | undefined>>([]);
   const [showDirections, setShowDirections] = useState(false);
+  const [showWayPts, setShowWayPts] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -96,6 +102,15 @@ function Routes({ navigation }: Props) {
   //     },
   //     marker: null,
   //   };
+  //   const waypointNames: Array<number | undefined> = [];
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const mapRef = useRef<MapView>(null);
 
@@ -131,6 +146,16 @@ function Routes({ navigation }: Props) {
     }
   };
 
+  const clearWaypoints = () => {
+    setWaypoints([]);
+    setWaypointNames([]);
+    onRefresh();
+  };
+
+  const showWaypoints = () => {
+    setShowWayPts(!showWayPts);
+  };
+
   const openRouteInMaps = () => {
     if (!origin || !destination) {
       return;
@@ -154,6 +179,28 @@ function Routes({ navigation }: Props) {
     };
     set(position);
     moveTo(position, 10);
+  };
+
+  const onWaypointSelected = (
+    details: GooglePlaceDetail | null,
+    // flag: number,
+  ) => {
+    // const set = flag === 'origin' ? setOrigin : setDestination;
+    console.log(details?.name);
+    const position = {
+      latitude: details?.geometry.location.lat || 0,
+      longitude: details?.geometry.location.lng || 0,
+    };
+    moveTo(position, 10);
+    waypoints.push(position);
+    // setWaypoints(waypoints);
+    waypointNames.push(details?.name);
+    setWaypointNames(waypointNames);
+    console.log(waypointNames);
+    onRefresh();
+    // setWaypoints([{ latitude: 41.8781, longitude: -87.6298 }, { latitude: 39.7392, longitude: -104.9903 }]);
+    // set(position);
+    // moveTo(position, 10);
   };
 
   return (
@@ -182,12 +229,65 @@ function Routes({ navigation }: Props) {
         )}
       </MapView>
       <View style={styles.searchBars}>
-        <InputAutocomplete
-          label="Starting Location"
-          onPlaceSelected={(details) => {
-            onPlaceSelected(details, 'origin');
-          }}
-        />
+        <Text>Starting Location</Text>
+        <View style={styles.flex}>
+          <InputAutocomplete
+            onPlaceSelected={(details) => {
+              onPlaceSelected(details, 'origin');
+            }}
+            subType
+          />
+          <TouchableOpacity
+            style={[styles.sideButton,
+              {
+                backgroundColor: showWayPts ? 'red' : 'blue',
+              },
+            ]}
+            onPress={showWaypoints}
+          >
+            <Text style={styles.subButtonText}>{showWayPts ? '-' : '📍'}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={[
+          {
+            maxHeight: showWayPts ? 'auto' : 0,
+            opacity: showWayPts ? 1 : 0,
+          },
+        ]}
+        >
+          <Text style={[
+            {
+              opacity: waypointNames.length ? 1 : 0,
+            },
+          ]}
+          >
+            Selected Waypoints
+
+          </Text>
+          <ScrollView refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            {waypointNames.map((waypointName) => (
+              <Text>
+                {'      '}
+                •
+                {waypointName}
+
+              </Text>
+            ))}
+          </ScrollView>
+          <InputAutocomplete
+            label="Add Waypoint"
+            onPlaceSelected={(details) => {
+              onWaypointSelected(details);
+            }}
+          />
+          <TouchableOpacity style={styles.button} onPress={clearWaypoints}>
+            <Text style={styles.buttonText}>Clear Waypoints</Text>
+          </TouchableOpacity>
+        </View>
         <InputAutocomplete
           label="End Location"
           onPlaceSelected={(details) => {
@@ -223,6 +323,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  flex: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   searchBars: {
     position: 'absolute',
     width: '70%',
@@ -250,13 +354,32 @@ const styles = StyleSheet.create({
     borderWidth: 3.5,
     borderRadius: 18,
   },
+  subinput: {
+    maxWidth: '97%',
+    borderColor: 'red',
+    borderWidth: 3.5,
+    borderRadius: 18,
+  },
   button: {
     backgroundColor: 'green',
     paddingVertical: 5,
     marginTop: 1,
     borderRadius: 18,
   },
+  sideButton: {
+    maxWidth: '20%',
+    minWidth: '20%',
+    margin: 1,
+    // backgroundColor: 'blue',
+    borderRadius: 18,
+  },
   buttonText: {
+    textAlign: 'center',
+  },
+  subButtonText: {
+    color: 'white',
+    fontSize: 25,
+    top: 6,
     textAlign: 'center',
   },
   menuButtonText: {
