@@ -404,6 +404,7 @@ const styles = StyleSheet.create({
   },
   sideButton: {
     maxWidth: '20%',
+    maxHeight: 47,
     minWidth: '20%',
     margin: 1,
     // backgroundColor: 'blue',
