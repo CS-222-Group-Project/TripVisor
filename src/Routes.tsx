@@ -23,6 +23,7 @@ import React, { useRef, useState } from 'react';
 import MapViewDirections from 'react-native-maps-directions';
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from './RootStackParams';
 import { gKey } from './envs';
 
@@ -33,6 +34,11 @@ type ProfileScreenNavigationProp = NativeStackNavigationProp<
 
 type Props = {
   navigation: ProfileScreenNavigationProp;
+};
+
+type StringLatLngPair = {
+  name?: string;
+  coord: LatLng;
 };
 
 // const gKey = process.env.REACT_APP_G_KEY;
@@ -84,13 +90,13 @@ function InputAutocomplete({
 }
 
 function Routes({ navigation }: Props) {
-  const [origin, setOrigin] = useState<LatLng | null>();
-  const [destination, setDestination] = useState<LatLng | null>();
-  const [waypoints, setWaypoints] = useState<LatLng[]>([]);
-  const [waypointNames, setWaypointNames] = useState<Array<string | undefined>>([]);
+  const [origin, setOrigin] = useState<StringLatLngPair | null>();
+  const [destination, setDestination] = useState<StringLatLngPair | null>();
+  const [waypoints, setWaypoints] = useState<StringLatLngPair[]>([]);
   const [showDirections, setShowDirections] = useState(false);
   const [showWayPts, setShowWayPts] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
+  const [refreshing, setRefreshing] = useState(false);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
   //   this.state = {
@@ -102,8 +108,6 @@ function Routes({ navigation }: Props) {
   //     },
   //     marker: null,
   //   };
-  //   const waypointNames: Array<number | undefined> = [];
-  const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -142,13 +146,48 @@ function Routes({ navigation }: Props) {
   const traceRoute = () => {
     if (origin && destination) {
       setShowDirections(true);
-      mapRef.current?.fitToCoordinates([origin, destination], { edgePadding });
+      mapRef.current?.fitToCoordinates([origin.coord, destination.coord], { edgePadding });
+    }
+  };
+
+  const storeRoute = async () => {
+    try {
+      const route = {
+        origin,
+        destination,
+        waypoints,
+      };
+      // // commented out for now otherwise data persists forever
+      // const routes = await AsyncStorage.getItem('routes');
+      // if (routes) {
+      //   const routesArray = JSON.parse(routes);
+      //   routesArray.push(route);
+      //   await AsyncStorage.setItem('routes', JSON.stringify(routesArray));
+      // } else {
+      await AsyncStorage.setItem('routes', JSON.stringify([route]));
+      // }
+    } catch (e) {
+      // Add your own error handler here
+    }
+  };
+
+  const getRoute = async () => {
+    try {
+      const routes = await AsyncStorage.getItem('routes');
+      if (routes) {
+        const routesArray = JSON.parse(routes);
+        const route = routesArray[routesArray.length - 1];
+        setOrigin(route.origin);
+        setDestination(route.destination);
+        setWaypoints(route.waypoints);
+      }
+    } catch (e) {
+      // Add your own error handler here
     }
   };
 
   const clearWaypoints = () => {
     setWaypoints([]);
-    setWaypointNames([]);
     onRefresh();
   };
 
@@ -161,9 +200,11 @@ function Routes({ navigation }: Props) {
       return;
     }
     const baseUrl = 'https://www.google.com/maps/dir/?api=1';
-    const originParam = `&origin=${origin.latitude},${origin.longitude}`;
-    const destinationParam = `&destination=${destination.latitude},${destination.longitude}`;
-    const waypointsParam = `&waypoints=${waypoints.map((wp) => `${wp.latitude},${wp.longitude}`).join('|')}`;
+
+    const originParam = `&origin=${encodeURIComponent(origin.name || `${origin.coord.latitude},${origin.coord.longitude}`)}`;
+    const destinationParam = `&destination=${encodeURIComponent(destination.name || `${destination.coord.latitude},${destination.coord.longitude}`)}`;
+    const waypointsParam = `&waypoints=${waypoints.map((wp) => encodeURIComponent(wp.name || `${wp.coord.latitude},${wp.coord.longitude}`)).join('%7C')}`;
+
     const url = baseUrl + originParam + destinationParam + waypointsParam;
     Linking.openURL(url);
   };
@@ -177,30 +218,20 @@ function Routes({ navigation }: Props) {
       latitude: details?.geometry.location.lat || 0,
       longitude: details?.geometry.location.lng || 0,
     };
-    set(position);
+    set({ name: details?.name, coord: position });
     moveTo(position, 10);
   };
 
   const onWaypointSelected = (
     details: GooglePlaceDetail | null,
-    // flag: number,
   ) => {
-    // const set = flag === 'origin' ? setOrigin : setDestination;
-    console.log(details?.name);
     const position = {
       latitude: details?.geometry.location.lat || 0,
       longitude: details?.geometry.location.lng || 0,
     };
+    waypoints.push({ name: details?.name, coord: position });
     moveTo(position, 10);
-    waypoints.push(position);
-    // setWaypoints(waypoints);
-    waypointNames.push(details?.name);
-    setWaypointNames(waypointNames);
-    console.log(waypointNames);
     onRefresh();
-    // setWaypoints([{ latitude: 41.8781, longitude: -87.6298 }, { latitude: 39.7392, longitude: -104.9903 }]);
-    // set(position);
-    // moveTo(position, 10);
   };
 
   return (
@@ -214,12 +245,12 @@ function Routes({ navigation }: Props) {
       >
         {/* this.state.marker &&
         <Marker coordinate={this.state.marker} /> */}
-        {origin && <Marker coordinate={origin} />}
-        {destination && <Marker coordinate={destination} />}
+        {origin && <Marker coordinate={origin.coord} />}
+        {destination && <Marker coordinate={destination.coord} />}
         {showDirections && origin && destination && (
           <MapViewDirections
-            origin={origin}
-            destination={destination}
+            origin={origin.coord}
+            destination={destination.coord}
             apikey={gKey}
             strokeColor="#007aff"
             strokeWidth={4}
@@ -258,7 +289,7 @@ function Routes({ navigation }: Props) {
         >
           <Text style={[
             {
-              opacity: waypointNames.length ? 1 : 0,
+              opacity: waypoints.length ? 1 : 0,
             },
           ]}
           >
@@ -269,12 +300,11 @@ function Routes({ navigation }: Props) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            {waypointNames.map((waypointName) => (
+            {waypoints.map((waypointPair) => (
               <Text>
                 {'      '}
                 •
-                {waypointName}
-
+                {waypointPair.name}
               </Text>
             ))}
           </ScrollView>
@@ -296,6 +326,12 @@ function Routes({ navigation }: Props) {
         />
         <TouchableOpacity style={styles.button} onPress={traceRoute}>
           <Text style={styles.buttonText}>Make Route</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={storeRoute}>
+          <Text style={styles.buttonText}>Save Route</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={getRoute}>
+          <Text style={styles.buttonText}>Load Route</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={openRouteInMaps}>
           <Text style={styles.buttonText}>Open in Maps</Text>
@@ -363,7 +399,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'green',
     paddingVertical: 5,
-    marginTop: 1,
+    margin: 4,
     borderRadius: 18,
   },
   sideButton: {
