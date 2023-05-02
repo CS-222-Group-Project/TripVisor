@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   useColorScheme,
+  Linking,
 } from 'react-native';
 import {
   GooglePlaceDetail,
@@ -81,6 +82,7 @@ function InputAutocomplete({
 function Routes({ navigation }: Props) {
   const [origin, setOrigin] = useState<LatLng | null>();
   const [destination, setDestination] = useState<LatLng | null>();
+  const [waypoints, setWaypoints] = useState<LatLng[]>([]);
   const [showDirections, setShowDirections] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
   const [distance, setDistance] = useState(0);
@@ -129,6 +131,18 @@ function Routes({ navigation }: Props) {
     }
   };
 
+  const openRouteInMaps = () => {
+    if (!origin || !destination) {
+      return;
+    }
+    const baseUrl = 'https://www.google.com/maps/dir/?api=1';
+    const originParam = `&origin=${origin.latitude},${origin.longitude}`;
+    const destinationParam = `&destination=${destination.latitude},${destination.longitude}`;
+    const waypointsParam = `&waypoints=${waypoints.map((wp) => `${wp.latitude},${wp.longitude}`).join('|')}`;
+    const url = baseUrl + originParam + destinationParam + waypointsParam;
+    Linking.openURL(url);
+  };
+
   const onPlaceSelected = (
     details: GooglePlaceDetail | null,
     flag: 'origin' | 'destination',
@@ -141,6 +155,7 @@ function Routes({ navigation }: Props) {
     set(position);
     moveTo(position, 10);
   };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -181,6 +196,9 @@ function Routes({ navigation }: Props) {
         />
         <TouchableOpacity style={styles.button} onPress={traceRoute}>
           <Text style={styles.buttonText}>Make Route</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={openRouteInMaps}>
+          <Text style={styles.buttonText}>Open in Maps</Text>
         </TouchableOpacity>
       </View>
       <View style={[
