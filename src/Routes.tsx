@@ -72,7 +72,7 @@ function InputAutocomplete({
 }: InputAutocompleteProps) {
   return (
     <>
-      <Text>{label}</Text>
+      <Text style={[{ color: 'white' }]}>{label}</Text>
       <GooglePlacesAutocomplete
         styles={{ textInput: subType ? styles.subinput : styles.input }}
         placeholder={placeholder || ''}
@@ -349,7 +349,7 @@ function Routes({ navigation }: Props) {
         )}
       </MapView>
       <View style={styles.searchBars}>
-        <Text>Starting Location</Text>
+        <Text style={[{ color: 'white' }]}>Starting Location</Text>
         <View style={styles.flex}>
           <InputAutocomplete
             onPlaceSelected={(details) => {
@@ -372,6 +372,7 @@ function Routes({ navigation }: Props) {
           {
             opacity: waypoints.length ? 1 : 0,
             height: waypoints.length ? 'auto' : 0,
+            color: 'white',
           },
         ]}
         >
@@ -383,7 +384,7 @@ function Routes({ navigation }: Props) {
             }
         >
           {waypoints.map((waypointPair) => (
-            <Text key={waypointPair.name}>
+            <Text style={[{ color: 'white' }]} key={waypointPair.name}>
               {'      '}
               •
               {waypointPair.name}
@@ -407,7 +408,7 @@ function Routes({ navigation }: Props) {
             <Text style={styles.buttonText}>Clear Waypoints</Text>
           </TouchableOpacity>
         </View>
-        <Text>End Location</Text>
+        <Text style={[{ color: 'white' }]}>End Location</Text>
         <View style={styles.flex}>
           <InputAutocomplete
             onPlaceSelected={(details) => {
@@ -503,7 +504,7 @@ function Routes({ navigation }: Props) {
           <TouchableOpacity
             style={[styles.sideRecButton,
               {
-                backgroundColor: showRecs ? 'red' : 'blue',
+                backgroundColor: showRecs ? 'gray' : 'skyblue',
               },
             ]}
             onPress={showReccs}
@@ -575,7 +576,6 @@ function Routes({ navigation }: Props) {
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
           bottom: showSettings ? 80 : 20,
         },
       ]}
@@ -588,7 +588,6 @@ function Routes({ navigation }: Props) {
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
           bottom: showSettings ? 140 : 20,
         },
       ]}
@@ -601,7 +600,6 @@ function Routes({ navigation }: Props) {
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
           bottom: showSettings ? 200 : 20,
         },
       ]}
@@ -614,7 +612,6 @@ function Routes({ navigation }: Props) {
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
           bottom: showSettings ? 260 : 20,
         },
       ]}
@@ -627,7 +624,6 @@ function Routes({ navigation }: Props) {
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
           bottom: showSettings ? 320 : 20,
         },
       ]}
@@ -639,9 +635,6 @@ function Routes({ navigation }: Props) {
 
       <View style={[
         styles.menuButton,
-        {
-          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
-        },
       ]}
       >
         <TouchableOpacity onPress={() => setShowSettings(!showSettings)}>
@@ -671,7 +664,7 @@ const styles = StyleSheet.create({
   searchBars: {
     position: 'absolute',
     width: '70%',
-    backgroundColor: 'white',
+    backgroundColor: '#55596D',
     padding: 8,
     borderRadius: 10,
     top: Constants.statusBarHeight,
@@ -679,7 +672,7 @@ const styles = StyleSheet.create({
   reccBars: {
     position: 'absolute',
     width: '65%',
-    backgroundColor: 'white',
+    backgroundColor: '#55596D',
     padding: 8,
     borderRadius: 10,
     bottom: -8,
@@ -688,7 +681,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 50,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: '#55596D',
     // padding: 8,
     borderRadius: 18,
     bottom: 20,
@@ -696,11 +689,11 @@ const styles = StyleSheet.create({
   },
   reccButton: {
     maxWidth: '97%',
-    backgroundColor: 'gray',
-    borderColor: 'gray',
+    backgroundColor: 'skyblue',
+    borderColor: 'skyblue',
     borderWidth: 3.5,
     borderRadius: 18,
-    margin: 5,
+    margin: 7,
   },
   map: {
     width: Dimensions.get('window').width,
@@ -763,17 +756,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   reccTButtonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 20,
     top: 2,
+    left: 0,
     textAlign: 'left',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     fontWeight: 'bold',
   },
   reccTypeButtonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 18,
-    top: -12,
+    top: -8,
     minWidth: '40%',
     maxWidth: '40%',
     textAlign: 'center',

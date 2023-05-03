@@ -119,7 +119,7 @@ function Auth({ navigation }: Props) {
       ) : (
         <View style={styles.boxTwo}>
           <Text style={{
-            fontSize: 65, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-70%', height: 65, width: 350, color: 'rgb(9,9,121)',
+            fontSize: 65, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-70%', height: 75, width: 350, color: 'rgb(9,9,121)',
           }}
           >
             TripVisor
