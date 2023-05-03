@@ -220,7 +220,7 @@ function Home({ navigation }: Props) {
               },
             ]}
           >
-            <Text style={styles.appName}>TravelVisor</Text>
+            <Text style={styles.appName}>TripVisor</Text>
           </Animated.View>
           <View style={styles.areaContainer}>
             <Animated.View

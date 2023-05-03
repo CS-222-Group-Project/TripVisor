@@ -122,7 +122,7 @@ function Auth({ navigation }: Props) {
             fontSize: 65, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-70%', height: 65, width: 350, color: 'rgb(9,9,121)',
           }}
           >
-            TravelVisor
+            TripVisor
           </Text>
           <Text style={{
             fontSize: 45, fontWeight: 'bold', marginBottom: -10, textAlign: 'center', marginTop: '-40%', color: 'white', height: 45, width: 350,
