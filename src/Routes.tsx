@@ -239,22 +239,24 @@ function Routes({ navigation }: Props) {
       <MapView
         ref={mapRef}
         style={styles.map}
-        provider={PROVIDER_DEFAULT}
+        provider={PROVIDER_GOOGLE}
         initialRegion={initPos}
         // onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate })}
       >
         {/* this.state.marker &&
         <Marker coordinate={this.state.marker} /> */}
-        {origin && <Marker coordinate={origin.coord} />}
-        {destination && <Marker coordinate={destination.coord} />}
+        {origin && <Marker title={origin.name} coordinate={origin.coord} />}
+        {destination && <Marker title={destination.name} coordinate={destination.coord} />}
+        {waypoints.map((wp) => <Marker title={wp.name} coordinate={wp.coord} />)}
         {showDirections && origin && destination && (
           <MapViewDirections
             origin={origin.coord}
             destination={destination.coord}
+            waypoints={waypoints.map((wp) => wp.coord)}
             apikey={gKey}
             strokeColor="#007aff"
             strokeWidth={4}
-            // precision="high" // crashes with long distances
+            precision="high" // crashes with long distances in apple maps
             onReady={traceRouteOnReady}
           />
         )}
