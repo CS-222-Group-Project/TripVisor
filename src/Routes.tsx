@@ -159,14 +159,23 @@ function Routes({ navigation }: Props) {
   const getPlacesFromApiAsync = async () => {
     try {
       const interestTypes = reccTypes.join();
-      console.log(interestTypes);
-      const fetchLink = `http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?wp=Chicago%20IL&maxTime=10&tu=minute&type=${interestTypes}&key=AgkFjR2FwPQ47SoQv9jRSbeXn4dD8ufs-F1I5JAJE9Un16TvPsCpkpS_08tRpPwn`;
-      const response = await fetch(
-        fetchLink,
-      );
-      const json = await response.json();
-      //   console.log(json);
-      return json.resourceSets[0].resources[0].categoryTypeResults;
+      if (destination) {
+        const baseLink = 'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?';
+        // wp based on destination coord
+        const wpLink = `&wp=${destination.coord.latitude},${destination.coord.longitude}`;
+        const maxTimeLink = '&maxTime=10&tu=minute';
+        const typeLink = `&type=${interestTypes}`;
+        const keyLink = '&key=AgkFjR2FwPQ47SoQv9jRSbeXn4dD8ufs-F1I5JAJE9Un16TvPsCpkpS_08tRpPwn';
+        const fetchLink = baseLink + wpLink + maxTimeLink + typeLink + keyLink;
+        console.log(fetchLink);
+        const response = await fetch(
+          fetchLink,
+        );
+        const json = await response.json();
+        //   console.log(json);
+        return json.resourceSets[0].resources[0].categoryTypeResults;
+      }
+      return null;
     } catch (error) {
       console.error(error);
     }
@@ -424,10 +433,12 @@ function Routes({ navigation }: Props) {
           <TouchableOpacity
             style={[styles.sideRecPageButton,
               {
-                opacity: (reccPage <= 0) ? 0 : 1,
+                opacity: (reccPage <= 0) ? 0.25 : 1,
               },
             ]}
-            onPress={() => setReccPage(reccPage - 1)}
+            onPress={() => {
+              setReccPage((reccPage > 0) ? reccPage - 1 : 0);
+            }}
           >
             <Text style={styles.subRecPageButtonText}>‹</Text>
           </TouchableOpacity>
@@ -435,10 +446,12 @@ function Routes({ navigation }: Props) {
           <TouchableOpacity
             style={[styles.sideRecPageButton,
               {
-                opacity: (reccPage >= reccData.length - 1) ? 0 : 1,
+                opacity: (reccPage >= reccData.length - 1) ? 0.25 : 1,
               },
             ]}
-            onPress={() => setReccPage(reccPage + 1)}
+            onPress={() => {
+              setReccPage((reccPage < reccData.length - 1) ? reccPage + 1 : reccData.length - 1);
+            }}
           >
             <Text style={styles.subRecPageButtonText}>›</Text>
           </TouchableOpacity>
