@@ -96,7 +96,9 @@ function Routes({ navigation }: Props) {
   const [showDirections, setShowDirections] = useState(false);
   const [showWayPts, setShowWayPts] = useState(false);
   const [showRecs, setShowRecs] = useState(false);
-  const [reccData, setReccData] = useState<Object[]>([]);
+  const [reccData, setReccData] = useState<Object[][]>([]);
+  const [reccTypes, setReccTypes] = useState<string[]>(['EatDrink', 'SeeDo', 'Shop', 'HotelsAndMotels', 'Parking']);
+  const [reccPage, setReccPage] = useState(0);
   const isDarkMode = useColorScheme() === 'dark';
   const [refreshing, setRefreshing] = useState(false);
   const [distance, setDistance] = useState(0);
@@ -125,7 +127,7 @@ function Routes({ navigation }: Props) {
       latitude: parseFloat(lat),
       longitude: parseFloat(long),
     };
-    console.log(position.latitude);
+    // console.log(position.latitude);
     moveTo(position, 10);
   };
 
@@ -156,8 +158,11 @@ function Routes({ navigation }: Props) {
 
   const getPlacesFromApiAsync = async () => {
     try {
+      const interestTypes = reccTypes.join();
+      console.log(interestTypes);
+      const fetchLink = `http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?wp=Chicago%20IL&maxTime=10&tu=minute&type=${interestTypes}&key=AgkFjR2FwPQ47SoQv9jRSbeXn4dD8ufs-F1I5JAJE9Un16TvPsCpkpS_08tRpPwn`;
       const response = await fetch(
-        'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?wp=Chicago%20IL&maxTime=10&tu=minute&type=MovieTheaters,Parks&key=AgkFjR2FwPQ47SoQv9jRSbeXn4dD8ufs-F1I5JAJE9Un16TvPsCpkpS_08tRpPwn',
+        fetchLink,
       );
       const json = await response.json();
       //   console.log(json);
@@ -169,8 +174,12 @@ function Routes({ navigation }: Props) {
 
   const generateTravelRecs = async () => {
     const apiResponse = await getPlacesFromApiAsync();
-    setReccData(apiResponse[0].entities);
-    console.log(apiResponse[0].entities);
+    for (let reccTypeIdx = 0; reccTypeIdx < reccTypes.length; reccTypeIdx += 1) {
+      reccData[reccTypeIdx] = apiResponse[reccTypeIdx].entities;
+    }
+    // reccData[0] = apiResponse[0].entities;
+    // console.log(reccData);
+    // setReccData(apiResponse[0].entities);
     setShowRecs(true);
   };
 
@@ -391,7 +400,7 @@ function Routes({ navigation }: Props) {
       <View style={[
         styles.reccBars,
         {
-          height: showRecs ? 'auto' : 60,
+          height: showRecs ? 'auto' : 56,
           opacity: reccData.length > 0 ? 1 : 0,
         },
       ]}
@@ -409,13 +418,36 @@ function Routes({ navigation }: Props) {
             <Text style={styles.subRecButtonText}>{showRecs ? '▾' : '▴'}</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.flexTwo}>
+          <TouchableOpacity
+            style={[styles.sideRecPageButton,
+              {
+                opacity: (reccPage <= 0) ? 0 : 1,
+              },
+            ]}
+            onPress={() => setReccPage(reccPage - 1)}
+          >
+            <Text style={styles.subRecPageButtonText}>‹</Text>
+          </TouchableOpacity>
+          <Text style={styles.reccTypeButtonText}>{reccTypes[reccPage]}</Text>
+          <TouchableOpacity
+            style={[styles.sideRecPageButton,
+              {
+                opacity: (reccPage >= reccData.length - 1) ? 0 : 1,
+              },
+            ]}
+            onPress={() => setReccPage(reccPage + 1)}
+          >
+            <Text style={styles.subRecPageButtonText}>›</Text>
+          </TouchableOpacity>
+        </View>
         <ScrollView
           style={styles.bottomSpacer}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-          {reccData.slice(0, 5).map((recc) => (
+          {reccData[reccPage]?.slice(0, 5).map((recc) => (
             <TouchableOpacity style={styles.reccButton} onPress={() => moveToPos(recc.latitude, recc.longitude)}>
               <Text style={styles.reccButtonText}>
                 {recc.entityName}
@@ -516,7 +548,7 @@ const styles = StyleSheet.create({
   },
   sideButton: {
     maxWidth: '20%',
-    minHeight: 47,
+    maxHeight: 47,
     minWidth: '20%',
     margin: 1,
     // backgroundColor: 'blue',
@@ -530,6 +562,15 @@ const styles = StyleSheet.create({
     // backgroundColor: 'blue',
     borderRadius: 18,
   },
+  sideRecPageButton: {
+    maxWidth: '20%',
+    maxHeight: 20,
+    minWidth: '20%',
+    margin: 1,
+    top: -5,
+    backgroundColor: 'gray',
+    borderRadius: 18,
+  },
   buttonText: {
     textAlign: 'center',
   },
@@ -537,8 +578,19 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     top: 2,
-    textAlign: 'right',
+    textAlign: 'left',
+    marginHorizontal: 15,
+    fontWeight: 'bold',
+  },
+  reccTypeButtonText: {
+    color: 'black',
+    fontSize: 18,
+    top: -12,
+    minWidth: '40%',
+    maxWidth: '40%',
+    textAlign: 'center',
     marginHorizontal: 25,
+    textDecorationLine: 'underline',
   },
   reccButtonText: {
     color: 'white',
@@ -553,6 +605,13 @@ const styles = StyleSheet.create({
   },
   subRecButtonText: {
     color: 'white',
+    fontSize: 25,
+    textAlign: 'center',
+  },
+  subRecPageButtonText: {
+    color: 'white',
+    top: -8,
+    height: 30,
     fontSize: 25,
     textAlign: 'center',
   },
