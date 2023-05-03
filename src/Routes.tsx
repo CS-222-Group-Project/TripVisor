@@ -25,7 +25,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from './RootStackParams';
-import { gKey } from './envs';
+import { gKey, bKey } from './envs';
 
 type ProfileScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -95,6 +95,13 @@ function Routes({ navigation }: Props) {
   const [waypoints, setWaypoints] = useState<StringLatLngPair[]>([]);
   const [showDirections, setShowDirections] = useState(false);
   const [showWayPts, setShowWayPts] = useState(false);
+  const [showRecs, setShowRecs] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showPreferences, setShowPreferences] = useState(false);
+  const [reccData, setReccData] = useState<Object[][]>([]);
+  const [reccTypes, setReccTypes] = useState<string[]>(['Restaurants', 'HotelsAndMotels', 'Parking', 'AmusementParks', 'Parks', 'Zoos']);
+  const [allReccTypes, setAllReccTypes] = useState<string[]>(['Restaurants', 'HotelsAndMotels', 'Parking', 'AmusementParks', 'Carnivals', 'Casinos', 'Museums', 'MallsAndShoppingCenters', 'Parks', 'Zoos']);
+  const [reccPage, setReccPage] = useState(0);
   const isDarkMode = useColorScheme() === 'dark';
   const [refreshing, setRefreshing] = useState(false);
   const [distance, setDistance] = useState(0);
@@ -117,6 +124,14 @@ function Routes({ navigation }: Props) {
   }, []);
 
   const mapRef = useRef<MapView>(null);
+
+  const moveToPos = (lat: string, long: string) => {
+    const position = {
+      latitude: parseFloat(lat),
+      longitude: parseFloat(long),
+    };
+    moveTo(position, 10);
+  };
 
   const moveTo = async (position: LatLng, zoom: number) => {
     const camera = await mapRef.current?.getCamera();
@@ -143,10 +158,45 @@ function Routes({ navigation }: Props) {
     }
   };
 
+  const getPlacesFromApiAsync = async () => {
+    try {
+      const interestTypes = reccTypes.join();
+      if (destination) {
+        const baseLink = 'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?';
+        // wp based on destination coord
+        const wpLink = `&wp=${destination.coord.latitude},${destination.coord.longitude}`;
+        const maxTimeLink = `&maxTime=${duration > 25 ? 25 : 15}&tu=minute`;
+        const typeLink = `&type=${interestTypes}`;
+        const keyLink = `&key=${bKey}`;
+        const fetchLink = baseLink + wpLink + maxTimeLink + typeLink + keyLink;
+        const response = await fetch(
+          fetchLink,
+        );
+        const json = await response.json();
+        return json.resourceSets[0].resources[0].categoryTypeResults;
+      }
+      return null;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const generateTravelRecs = async () => {
+    const apiResponse = await getPlacesFromApiAsync();
+    for (let reccTypeIdx = 0; reccTypeIdx < reccTypes.length; reccTypeIdx += 1) {
+      reccData[reccTypeIdx] = apiResponse[reccTypeIdx].entities;
+    }
+    // reccData[0] = apiResponse[0].entities;
+    // console.log(reccData);
+    // setReccData(apiResponse[0].entities);
+    setShowRecs(true);
+  };
+
   const traceRoute = () => {
     if (origin && destination) {
       setShowDirections(true);
       mapRef.current?.fitToCoordinates([origin.coord, destination.coord], { edgePadding });
+      generateTravelRecs();
     }
   };
 
@@ -195,6 +245,10 @@ function Routes({ navigation }: Props) {
     setShowWayPts(!showWayPts);
   };
 
+  const showReccs = () => {
+    if (reccData.length > 0) { setShowRecs(!showRecs); }
+  };
+
   const openRouteInMaps = () => {
     if (!origin || !destination) {
       return;
@@ -207,6 +261,28 @@ function Routes({ navigation }: Props) {
 
     const url = baseUrl + originParam + destinationParam + waypointsParam;
     Linking.openURL(url);
+  };
+
+  const splitCamelCase = (str: string) => {
+    try {
+      const newStr = (str.split(/(?=[A-Z])/)).join(' ');
+      return newStr;
+    } catch (error) {
+      console.log(error);
+    }
+    return str;
+  };
+
+  const managePreferences = (str: string) => {
+    if (reccTypes.includes(str)) {
+      reccTypes.splice(reccTypes.indexOf(str), 1);
+    } else {
+      reccTypes.push(str);
+    }
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
   };
 
   const onPlaceSelected = (
@@ -223,7 +299,18 @@ function Routes({ navigation }: Props) {
   };
 
   const onWaypointSelected = (
-    details: GooglePlaceDetail | null,
+    details:
+      GooglePlaceDetail |
+      {
+        name: string,
+        geometry: {
+          location: {
+            lat: number,
+            lng: number,
+          }
+        }
+      } |
+      null,
   ) => {
     const position = {
       latitude: details?.geometry.location.lat || 0,
@@ -278,10 +365,31 @@ function Routes({ navigation }: Props) {
             ]}
             onPress={showWaypoints}
           >
-            <Text style={styles.subButtonText}>{showWayPts ? '-' : '📍'}</Text>
+            <Text style={styles.subButtonText}>{showWayPts ? '▼' : '📍+'}</Text>
           </TouchableOpacity>
         </View>
+        <Text style={[
+          {
+            opacity: waypoints.length ? 1 : 0,
+            height: waypoints.length ? 'auto' : 0,
+          },
+        ]}
+        >
+          Selected Waypoints
 
+        </Text>
+        <ScrollView refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
+          {waypoints.map((waypointPair) => (
+            <Text key={waypointPair.name}>
+              {'      '}
+              •
+              {waypointPair.name}
+            </Text>
+          ))}
+        </ScrollView>
         <View style={[
           {
             maxHeight: showWayPts ? 'auto' : 0,
@@ -289,27 +397,6 @@ function Routes({ navigation }: Props) {
           },
         ]}
         >
-          <Text style={[
-            {
-              opacity: waypoints.length ? 1 : 0,
-            },
-          ]}
-          >
-            Selected Waypoints
-
-          </Text>
-          <ScrollView refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
-            {waypoints.map((waypointPair) => (
-              <Text>
-                {'      '}
-                •
-                {waypointPair.name}
-              </Text>
-            ))}
-          </ScrollView>
           <InputAutocomplete
             label="Add Waypoint"
             onPlaceSelected={(details) => {
@@ -320,34 +407,245 @@ function Routes({ navigation }: Props) {
             <Text style={styles.buttonText}>Clear Waypoints</Text>
           </TouchableOpacity>
         </View>
-        <InputAutocomplete
-          label="End Location"
-          onPlaceSelected={(details) => {
-            onPlaceSelected(details, 'destination');
-          }}
-        />
-        <TouchableOpacity style={styles.button} onPress={traceRoute}>
+        <Text>End Location</Text>
+        <View style={styles.flex}>
+          <InputAutocomplete
+            onPlaceSelected={(details) => {
+              onPlaceSelected(details, 'destination');
+            }}
+            subType
+          />
+          <TouchableOpacity
+            style={[styles.sideButton,
+              {
+                backgroundColor: 'green',
+                opacity: destination ? 1 : 0.2,
+              },
+            ]}
+            onPress={traceRoute}
+          >
+            <Text style={styles.subButtonText}>🚘</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[
+          styles.flex,
+          {
+            maxHeight: showPreferences ? 'auto' : 0,
+          },
+        ]}
+        >
+          <ScrollView refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            {allReccTypes.slice(0, 5).map((reccPair) => (
+              <TouchableOpacity
+                style={[
+                  styles.reccTypeButtons,
+                  {
+                    backgroundColor: reccTypes.includes(reccPair) ? 'green' : 'white',
+                  },
+                ]}
+                onPress={() => managePreferences(reccPair)}
+              >
+                <Text style={styles.buttonText} key={reccPair}>
+                  {splitCamelCase(reccPair)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <ScrollView refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            {allReccTypes.slice(5, 10).map((reccPair) => (
+              <TouchableOpacity
+                style={[
+                  styles.reccTypeButtons,
+                  {
+                    backgroundColor: reccTypes.includes(reccPair) ? 'green' : 'white',
+                  },
+                ]}
+                onPress={() => managePreferences(reccPair)}
+              >
+                <Text style={styles.buttonText} key={reccPair}>
+                  {splitCamelCase(reccPair)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* <TouchableOpacity style={styles.button} onPress={traceRoute}>
           <Text style={styles.buttonText}>Make Route</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={storeRoute}>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity style={styles.button} onPress={storeRoute}>
           <Text style={styles.buttonText}>Save Route</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={getRoute}>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity style={styles.button} onPress={getRoute}>
           <Text style={styles.buttonText}>Load Route</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={openRouteInMaps}>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity style={styles.button} onPress={openRouteInMaps}>
           <Text style={styles.buttonText}>Open in Maps</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
+
+      <View style={[
+        styles.reccBars,
+        {
+          height: showRecs ? 'auto' : 56,
+          opacity: reccData.length > 0 ? 1 : 0,
+        },
+      ]}
+      >
+        <View style={styles.flexTwo}>
+          <Text style={styles.reccTButtonText}> Recommendations </Text>
+          <TouchableOpacity
+            style={[styles.sideRecButton,
+              {
+                backgroundColor: showRecs ? 'red' : 'blue',
+              },
+            ]}
+            onPress={showReccs}
+          >
+            <Text style={styles.subRecButtonText}>{showRecs ? '▾' : '▴'}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.flexTwo}>
+          <TouchableOpacity
+            style={[styles.sideRecPageButton,
+              {
+                opacity: (reccPage <= 0) ? 0.25 : 1,
+              },
+            ]}
+            onPress={() => {
+              setReccPage((reccPage > 0) ? reccPage - 1 : 0);
+            }}
+          >
+            <Text style={styles.subRecPageButtonText}>‹</Text>
+          </TouchableOpacity>
+          <Text style={styles.reccTypeButtonText}>{splitCamelCase(reccTypes[reccPage])}</Text>
+          <TouchableOpacity
+            style={[styles.sideRecPageButton,
+              {
+                opacity: (reccPage >= reccData.length - 1) ? 0.25 : 1,
+              },
+            ]}
+            onPress={() => {
+              setReccPage((reccPage < reccData.length - 1) ? reccPage + 1 : reccData.length - 1);
+            }}
+          >
+            <Text style={styles.subRecPageButtonText}>›</Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView
+          style={styles.bottomSpacer}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
+          {reccData[reccPage]?.slice(0, 5).map((recc) => (
+            <TouchableOpacity
+              key={recc.entityName}
+              style={styles.reccButton}
+              onPress={() => {
+                moveTo({ latitude: recc.latitude, longitude: recc.longitude }, 13);
+                // add way point to selected recc
+                onWaypointSelected(
+                  {
+                    name: recc.entityName,
+                    geometry: {
+                      location: {
+                        lat: recc.latitude,
+                        lng: recc.longitude,
+                      },
+                    },
+                  },
+                );
+              }}
+            >
+              <Text style={styles.reccButtonText}>
+                {recc.entityName}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#55596D' : '#FFF',
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
+          bottom: showSettings ? 80 : 20,
         },
       ]}
       >
         <TouchableOpacity onPress={() => navigation.navigate('Profile', { name: 'Jane' })}>
           <Text style={styles.menuButtonText}>⚙️</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={[
+        styles.menuButton,
+        {
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
+          bottom: showSettings ? 140 : 20,
+        },
+      ]}
+      >
+        <TouchableOpacity onPress={() => setShowPreferences(!showPreferences)}>
+          <Text style={styles.menuButtonText}>{showPreferences ? '🤷‍♂️' : '💁‍♂️'}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={[
+        styles.menuButton,
+        {
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
+          bottom: showSettings ? 200 : 20,
+        },
+      ]}
+      >
+        <TouchableOpacity onPress={openRouteInMaps}>
+          <Text style={styles.menuButtonText}>🗺</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={[
+        styles.menuButton,
+        {
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
+          bottom: showSettings ? 260 : 20,
+        },
+      ]}
+      >
+        <TouchableOpacity onPress={getRoute}>
+          <Text style={styles.menuButtonText}>👀</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={[
+        styles.menuButton,
+        {
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
+          bottom: showSettings ? 320 : 20,
+        },
+      ]}
+      >
+        <TouchableOpacity onPress={storeRoute}>
+          <Text style={styles.menuButtonText}>💾</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={[
+        styles.menuButton,
+        {
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
+        },
+      ]}
+      >
+        <TouchableOpacity onPress={() => setShowSettings(!showSettings)}>
+          <Text style={styles.menuButtonText}>{showSettings ? '📂' : '📁'}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -365,6 +663,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
+  flexTwo: {
+    flex: 1,
+    flexDirection: 'row',
+    minHeight: 50,
+  },
   searchBars: {
     position: 'absolute',
     width: '70%',
@@ -373,6 +676,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     top: Constants.statusBarHeight,
   },
+  reccBars: {
+    position: 'absolute',
+    width: '65%',
+    backgroundColor: 'white',
+    padding: 8,
+    borderRadius: 10,
+    bottom: -8,
+  },
   menuButton: {
     position: 'absolute',
     width: 50,
@@ -380,12 +691,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     // padding: 8,
     borderRadius: 18,
-    bottom: 30,
-    right: 30,
+    bottom: 20,
+    right: 20,
+  },
+  reccButton: {
+    maxWidth: '97%',
+    backgroundColor: 'gray',
+    borderColor: 'gray',
+    borderWidth: 3.5,
+    borderRadius: 18,
+    margin: 5,
   },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  bottomSpacer: {
+    marginBottom: 20,
   },
   input: {
     borderColor: 'red',
@@ -404,6 +726,14 @@ const styles = StyleSheet.create({
     margin: 4,
     borderRadius: 18,
   },
+  reccTypeButtons: {
+    borderColor: 'green',
+    borderWidth: 3.5,
+    paddingVertical: 5,
+    margin: 4,
+    borderRadius: 18,
+    maxWidth: 130,
+  },
   sideButton: {
     maxWidth: '20%',
     maxHeight: 47,
@@ -412,13 +742,65 @@ const styles = StyleSheet.create({
     // backgroundColor: 'blue',
     borderRadius: 18,
   },
+  sideRecButton: {
+    maxWidth: '20%',
+    maxHeight: 30,
+    minWidth: '20%',
+    margin: 1,
+    // backgroundColor: 'blue',
+    borderRadius: 18,
+  },
+  sideRecPageButton: {
+    maxWidth: '20%',
+    maxHeight: 20,
+    minWidth: '20%',
+    margin: 1,
+    top: -5,
+    backgroundColor: 'gray',
+    borderRadius: 18,
+  },
   buttonText: {
+    textAlign: 'center',
+  },
+  reccTButtonText: {
+    color: 'black',
+    fontSize: 20,
+    top: 2,
+    textAlign: 'left',
+    marginHorizontal: 15,
+    fontWeight: 'bold',
+  },
+  reccTypeButtonText: {
+    color: 'black',
+    fontSize: 18,
+    top: -12,
+    minWidth: '40%',
+    maxWidth: '40%',
+    textAlign: 'center',
+    marginHorizontal: 25,
+    textDecorationLine: 'underline',
+  },
+  reccButtonText: {
+    color: 'white',
+    fontSize: 15,
     textAlign: 'center',
   },
   subButtonText: {
     color: 'white',
     fontSize: 25,
     top: 6,
+    textAlign: 'center',
+  },
+  subRecButtonText: {
+    color: 'white',
+    fontSize: 25,
+    textAlign: 'center',
+  },
+  subRecPageButtonText: {
+    color: 'white',
+    top: -8,
+    height: 30,
+    fontSize: 25,
     textAlign: 'center',
   },
   menuButtonText: {
