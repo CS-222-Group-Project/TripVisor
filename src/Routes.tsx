@@ -95,6 +95,8 @@ function Routes({ navigation }: Props) {
   const [waypoints, setWaypoints] = useState<StringLatLngPair[]>([]);
   const [showDirections, setShowDirections] = useState(false);
   const [showWayPts, setShowWayPts] = useState(false);
+  const [showRecs, setShowRecs] = useState(false);
+  const [reccData, setReccData] = useState<Object[]>([]);
   const isDarkMode = useColorScheme() === 'dark';
   const [refreshing, setRefreshing] = useState(false);
   const [distance, setDistance] = useState(0);
@@ -117,6 +119,15 @@ function Routes({ navigation }: Props) {
   }, []);
 
   const mapRef = useRef<MapView>(null);
+
+  const moveToPos = (lat: string, long: string) => {
+    const position = {
+      latitude: parseFloat(lat),
+      longitude: parseFloat(long),
+    };
+    console.log(position.latitude);
+    moveTo(position, 10);
+  };
 
   const moveTo = async (position: LatLng, zoom: number) => {
     const camera = await mapRef.current?.getCamera();
@@ -143,11 +154,32 @@ function Routes({ navigation }: Props) {
     }
   };
 
+  const getPlacesFromApiAsync = async () => {
+    try {
+      const response = await fetch(
+        'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?wp=Chicago%20IL&maxTime=10&tu=minute&type=MovieTheaters,Parks&key=AgkFjR2FwPQ47SoQv9jRSbeXn4dD8ufs-F1I5JAJE9Un16TvPsCpkpS_08tRpPwn',
+      );
+      const json = await response.json();
+      //   console.log(json);
+      return json.resourceSets[0].resources[0].categoryTypeResults;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const generateTravelRecs = async () => {
+    const apiResponse = await getPlacesFromApiAsync();
+    setReccData(apiResponse[0].entities);
+    console.log(apiResponse[0].entities);
+    setShowRecs(true);
+  };
+
   const traceRoute = () => {
     if (origin && destination) {
       setShowDirections(true);
       mapRef.current?.fitToCoordinates([origin.coord, destination.coord], { edgePadding });
     }
+    generateTravelRecs();
   };
 
   const storeRoute = async () => {
@@ -193,6 +225,10 @@ function Routes({ navigation }: Props) {
 
   const showWaypoints = () => {
     setShowWayPts(!showWayPts);
+  };
+
+  const showReccs = () => {
+    if (reccData.length > 0) { setShowRecs(!showRecs); }
   };
 
   const openRouteInMaps = () => {
@@ -276,7 +312,7 @@ function Routes({ navigation }: Props) {
             ]}
             onPress={showWaypoints}
           >
-            <Text style={styles.subButtonText}>{showWayPts ? '-' : '📍'}</Text>
+            <Text style={styles.subButtonText}>{showWayPts ? '▼' : '📍+'}</Text>
           </TouchableOpacity>
         </View>
 
@@ -318,15 +354,29 @@ function Routes({ navigation }: Props) {
             <Text style={styles.buttonText}>Clear Waypoints</Text>
           </TouchableOpacity>
         </View>
-        <InputAutocomplete
-          label="End Location"
-          onPlaceSelected={(details) => {
-            onPlaceSelected(details, 'destination');
-          }}
-        />
-        <TouchableOpacity style={styles.button} onPress={traceRoute}>
+        <Text>End Location</Text>
+        <View style={styles.flex}>
+          <InputAutocomplete
+            onPlaceSelected={(details) => {
+              onPlaceSelected(details, 'destination');
+            }}
+            subType
+          />
+          <TouchableOpacity
+            style={[styles.sideButton,
+              {
+                backgroundColor: 'green',
+              },
+            ]}
+            onPress={traceRoute}
+          >
+            <Text style={styles.subButtonText}>🚘</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* <TouchableOpacity style={styles.button} onPress={traceRoute}>
           <Text style={styles.buttonText}>Make Route</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.button} onPress={storeRoute}>
           <Text style={styles.buttonText}>Save Route</Text>
         </TouchableOpacity>
@@ -337,10 +387,48 @@ function Routes({ navigation }: Props) {
           <Text style={styles.buttonText}>Open in Maps</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={[
+        styles.reccBars,
+        {
+          height: showRecs ? 'auto' : 60,
+          opacity: reccData.length > 0 ? 1 : 0,
+        },
+      ]}
+      >
+        <View style={styles.flexTwo}>
+          <Text style={styles.reccTButtonText}> Reccomendations </Text>
+          <TouchableOpacity
+            style={[styles.sideRecButton,
+              {
+                backgroundColor: showRecs ? 'red' : 'blue',
+              },
+            ]}
+            onPress={showReccs}
+          >
+            <Text style={styles.subRecButtonText}>{showRecs ? '▾' : '▴'}</Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView
+          style={styles.bottomSpacer}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
+          {reccData.slice(0, 5).map((recc) => (
+            <TouchableOpacity style={styles.reccButton} onPress={() => moveToPos(recc.latitude, recc.longitude)}>
+              <Text style={styles.reccButtonText}>
+                {recc.entityName}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
       <View style={[
         styles.menuButton,
         {
-          backgroundColor: isDarkMode ? '#55596D' : '#FFF',
+          backgroundColor: isDarkMode ? '#FFF' : '#55596D',
         },
       ]}
       >
@@ -363,6 +451,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
+  flexTwo: {
+    flex: 1,
+    flexDirection: 'row',
+    minHeight: 50,
+  },
   searchBars: {
     position: 'absolute',
     width: '70%',
@@ -371,6 +464,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     top: Constants.statusBarHeight,
   },
+  reccBars: {
+    position: 'absolute',
+    width: '65%',
+    backgroundColor: 'white',
+    padding: 8,
+    borderRadius: 10,
+    bottom: -8,
+  },
   menuButton: {
     position: 'absolute',
     width: 50,
@@ -378,12 +479,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     // padding: 8,
     borderRadius: 18,
-    bottom: 30,
-    right: 30,
+    bottom: 20,
+    right: 20,
+  },
+  reccButton: {
+    maxWidth: '97%',
+    backgroundColor: 'gray',
+    borderColor: 'gray',
+    borderWidth: 3.5,
+    borderRadius: 18,
+    margin: 5,
   },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  bottomSpacer: {
+    marginBottom: 20,
   },
   input: {
     borderColor: 'red',
@@ -404,7 +516,15 @@ const styles = StyleSheet.create({
   },
   sideButton: {
     maxWidth: '20%',
-    maxHeight: 47,
+    minHeight: 47,
+    minWidth: '20%',
+    margin: 1,
+    // backgroundColor: 'blue',
+    borderRadius: 18,
+  },
+  sideRecButton: {
+    maxWidth: '20%',
+    maxHeight: 30,
     minWidth: '20%',
     margin: 1,
     // backgroundColor: 'blue',
@@ -413,10 +533,27 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
   },
+  reccTButtonText: {
+    color: 'black',
+    fontSize: 20,
+    top: 2,
+    textAlign: 'right',
+    marginHorizontal: 25,
+  },
+  reccButtonText: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center',
+  },
   subButtonText: {
     color: 'white',
     fontSize: 25,
     top: 6,
+    textAlign: 'center',
+  },
+  subRecButtonText: {
+    color: 'white',
+    fontSize: 25,
     textAlign: 'center',
   },
   menuButtonText: {
