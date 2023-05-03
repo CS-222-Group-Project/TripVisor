@@ -127,7 +127,6 @@ function Routes({ navigation }: Props) {
       latitude: parseFloat(lat),
       longitude: parseFloat(long),
     };
-    // console.log(position.latitude);
     moveTo(position, 10);
   };
 
@@ -167,12 +166,10 @@ function Routes({ navigation }: Props) {
         const typeLink = `&type=${interestTypes}`;
         const keyLink = '&key=AgkFjR2FwPQ47SoQv9jRSbeXn4dD8ufs-F1I5JAJE9Un16TvPsCpkpS_08tRpPwn';
         const fetchLink = baseLink + wpLink + maxTimeLink + typeLink + keyLink;
-        console.log(fetchLink);
         const response = await fetch(
           fetchLink,
         );
         const json = await response.json();
-        //   console.log(json);
         return json.resourceSets[0].resources[0].categoryTypeResults;
       }
       return null;
@@ -277,7 +274,18 @@ function Routes({ navigation }: Props) {
   };
 
   const onWaypointSelected = (
-    details: GooglePlaceDetail | null,
+    details:
+      GooglePlaceDetail |
+      {
+        name: string,
+        geometry: {
+          location: {
+            lat: number,
+            lng: number,
+          }
+        }
+      } |
+      null,
   ) => {
     const position = {
       latitude: details?.geometry.location.lat || 0,
@@ -463,7 +471,24 @@ function Routes({ navigation }: Props) {
             }
         >
           {reccData[reccPage]?.slice(0, 5).map((recc) => (
-            <TouchableOpacity style={styles.reccButton} onPress={() => moveToPos(recc.latitude, recc.longitude)}>
+            <TouchableOpacity
+              style={styles.reccButton}
+              onPress={() => {
+                moveTo({ latitude: recc.latitude, longitude: recc.longitude }, 13);
+                // add way point to selected recc
+                onWaypointSelected(
+                  {
+                    name: recc.entityName,
+                    geometry: {
+                      location: {
+                        lat: recc.latitude,
+                        lng: recc.longitude,
+                      },
+                    },
+                  },
+                );
+              }}
+            >
               <Text style={styles.reccButtonText}>
                 {recc.entityName}
               </Text>
