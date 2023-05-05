@@ -334,7 +334,7 @@ function Routes({ navigation }: Props) {
         <Marker coordinate={this.state.marker} /> */}
         {origin && <Marker title={origin.name} coordinate={origin.coord} />}
         {destination && <Marker title={destination.name} coordinate={destination.coord} />}
-        {waypoints.map((wp) => <Marker title={wp.name} coordinate={wp.coord} />)}
+        {waypoints.map((wp) => <Marker key={wp.name} title={wp.name} coordinate={wp.coord} />)}
         {showDirections && origin && destination && (
           <MapViewDirections
             origin={origin.coord}
@@ -441,6 +441,7 @@ function Routes({ navigation }: Props) {
           >
             {allReccTypes.slice(0, 5).map((reccPair) => (
               <TouchableOpacity
+                key={reccPair}
                 style={[
                   styles.reccTypeButtons,
                   {
@@ -461,6 +462,7 @@ function Routes({ navigation }: Props) {
           >
             {allReccTypes.slice(5, 10).map((reccPair) => (
               <TouchableOpacity
+                key={reccPair}
                 style={[
                   styles.reccTypeButtons,
                   {
