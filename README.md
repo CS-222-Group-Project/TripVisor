@@ -1,6 +1,9 @@
 ﻿# TripVisor
 ## **CS 222 - Course Project - Byte Bandits**
 
+## Video
+[YouTube Video](https://youtu.be/dJn0BEAKQeY)
+
 ## Team Members
 - Ronit Anandani (anandani4136) - Recommendations, Waypoints, UI/UX
 - Nikhil Joshi (NikhilJ10) - Maps, Routing
